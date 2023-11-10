@@ -18,19 +18,9 @@ root.render(
       <CssBaseline />
        <App/>
      </ThemeProvider>
-      < Dishes/>
-   <Home/>
   </React.StrictMode>
 );
 
 
 
-function Dishes() {
-  return (
-    <h2>
-      <div>Dishes</div>
-    </h2>
-  );
-}
-export default Dishes;
 
