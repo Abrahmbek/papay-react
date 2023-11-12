@@ -2,7 +2,6 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 
 import './index.tsx';
-import Home from './home.tsx';
 import App from './app/App.tsx';
 
 import CssBaseline from '@mui/material/CssBaseline';
