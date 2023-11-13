@@ -3,6 +3,7 @@ import { Box, Button, Container, Stack, Typography } from '@mui/material';
 
 import '../css/App.css';
 import '../css/navbar.css';
+import '../css/footer.css';
 
 import {
   BrowserRouter as Router,
@@ -20,6 +21,7 @@ import { HomePage } from './screens/HomePage/index.tsx';
 import { NavbarHome } from './components/header/index.tsx';
 import { NavbarRestaurant } from './components/header/resatirant.tsx';
 import { NavbarOthers } from './components/header/others.tsx';
+import { Footer } from './components/footer/index.tsx';
 
 function App() {
   const [path, SetPath] = useState();
@@ -86,7 +88,8 @@ function App() {
           <HomePage />
         </Route>
       </Switch>
-   
+
+     <Footer />  
   </Router>
   );
 }
