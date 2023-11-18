@@ -19,7 +19,7 @@ export function TopRestaurants() {
                    alignItems={'center'}
                    sx={{mt: "45px"}}
                    >
-                    <Box className='category_title'></Box>
+                    <Box className='category_title'>Top Restaurantlar</Box>
                     <Stack sx={{mt: "43px"}} flexDirection={"row"} m={"16px"}>
              <CssVarsProvider>
                    <Card sx={{ minHeight: 430, minWidth: 325, mr: "35px", cursor: "pointer"}}>
