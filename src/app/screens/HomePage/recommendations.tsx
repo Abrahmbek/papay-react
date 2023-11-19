@@ -21,13 +21,12 @@ export function Recommendations() {
                      <Box className={"article_category"}>Ko'p Ko'rilgan</Box>
 
                      <Stack className={"article_box"}>
-                        <Box
-                        className={"ariticle_img"}
-                        sx={{
-                              backgroundImage: `url()`
-                        }}
-                        >
-                        </Box>
+                     <Box 
+                  className={"article_img"}
+                  sx={{
+                    backgroundImage:  `url(https://images.contentstack.io/v3/assets/blt1306150c2c4003bc/blt57450202d74b13e3/60befc62324cea0e69782639/00-indonesia_s-5-national-dishes-getty-cropped.jpg)`
+                  }}
+                ></Box>
                         <Box className={"aritcle_info"}>
                           <Box className={"article_main_info"}>
                               <div className={"article_author"}>
@@ -47,13 +46,12 @@ export function Recommendations() {
                       </Stack>
                       
                       <Stack className={"article_box"}>
-                        <Box
-                        className={"ariticle_img"}
-                        sx={{
-                              backgroundImage: `url()`
-                        }}
-                        >
-                        </Box>
+                          <Box 
+                      className={"article_img"}
+                      sx={{
+                        backgroundImage:  `url(https://images.contentstack.io/v3/assets/blt1306150c2c4003bc/blt57450202d74b13e3/60befc62324cea0e69782639/00-indonesia_s-5-national-dishes-getty-cropped.jpg)`
+                      }}
+                    ></Box>
                         <Box className={"aritcle_info"}>
                           <Box className={"article_main_info"}>
                               <div className={"article_author"}>
@@ -75,13 +73,12 @@ export function Recommendations() {
                       <Box className={"article_category"}>Ko'p Yoqtirilgan</Box>
 
                         <Stack className={"article_box"}>
-                        <Box
-                        className={"ariticle_img"}
-                        sx={{
-                              backgroundImage: `url()`
-                        }}
-                        >
-                        </Box>
+                        <Box 
+                          className={"article_img"}
+                          sx={{
+                            backgroundImage:  `url(https://images.contentstack.io/v3/assets/blt1306150c2c4003bc/blt57450202d74b13e3/60befc62324cea0e69782639/00-indonesia_s-5-national-dishes-getty-cropped.jpg)`
+                          }}
+                        ></Box>
                         <Box className={"aritcle_info"}>
                         <Box className={"article_main_info"}>
                               <div className={"article_author"}>
@@ -101,13 +98,12 @@ export function Recommendations() {
                         </Stack>
                         
                         <Stack className={"article_box"}>
-                        <Box
-                        className={"ariticle_img"}
-                        sx={{
-                              backgroundImage: `url()`
-                        }}
-                        >
-                        </Box>
+                            <Box 
+                              className={"article_img"}
+                              sx={{
+                                backgroundImage:  `url(https://images.contentstack.io/v3/assets/blt1306150c2c4003bc/blt57450202d74b13e3/60befc62324cea0e69782639/00-indonesia_s-5-national-dishes-getty-cropped.jpg)`
+                              }}
+                            ></Box>
                         <Box className={"aritcle_info"}>
                         <Box className={"article_main_info"}>
                               <div className={"article_author"}>

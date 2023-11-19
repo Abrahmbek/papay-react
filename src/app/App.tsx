@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
 import { Box, Button, Container, Stack, Typography } from '@mui/material';
-
+import React, { useState } from 'react';
 import '../css/App.css';
 import '../css/navbar.css';
 import '../css/footer.css';
@@ -19,7 +18,7 @@ import { HelpPage } from './screens/HelpPage/index.tsx';
 import { LoginPage } from './screens/LoginPage/index.tsx';
 import { HomePage } from './screens/HomePage/index.tsx';
 import { NavbarHome } from './components/header/index.tsx';
-import { NavbarRestaurant } from './components/header/resatirant.tsx';
+import { NavbarRestaurant } from './components/header/restaurant.tsx';
 import { NavbarOthers } from './components/header/others.tsx';
 import { Footer } from './components/footer/index.tsx';
 
@@ -38,32 +37,7 @@ function App() {
       <NavbarOthers SetPath={SetPath} />
      )}
 
-      {/* <nav>
-        <ul>
-          <li>
-            <Link to="/restaurant">RestaurantPage</Link>
-          </li>
-          <li>
-            <Link to="/community">CommunityPage</Link>
-          </li>
-          <li>
-            <Link to="/orders">OrderPage</Link>
-          </li>
-          <li>
-            <Link to="/member-page">MemberPage</Link>
-          </li>
-          <li>
-            <Link to="/help">HelpPage</Link>
-          </li>
-          <li>
-            <Link to="/login">LoginPage</Link>
-          </li>
-          <li>
-            <Link to="/">HomePage</Link>
-          </li>
-        </ul>
-      </nav> */}
-
+   
       
       <Switch>
         <Route path="/restaurant">
