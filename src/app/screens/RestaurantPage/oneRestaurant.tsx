@@ -21,17 +21,17 @@ const product_list = Array.from(Array(10).keys());
 export function OneRestaurant() {
 
   return (
-  <div className='single_resto'>
+  <div className="single_restaurant">
     <Container >
        <Stack flexDirection={"column"} alignItems={"center"}>
         <Stack className={"avatar_big_box"}>
           <Box className={"top_text"}>
             <p>Texas De Brazil Restaurant</p>
-            <Box className={"single_search_big_box"} >
-              <form className={"single_search_form"} action={""} method={""}>
+            <Box className={"Single_search_big_box"} >
+              <form className={"Single_search_form"} action={""} method={""}>
                 <input 
                 type="search" 
-                className={"single_searchInput"}
+                className={"Single_searchInput"}
                 name={"Single_resSearch"}
                 placeholder={"Qidiruv"}
                   />
@@ -168,9 +168,9 @@ export function OneRestaurant() {
                   />
                  </Badge>
                 </Button>
-                <Button className={"views_btn"}>
+                <Button className={"view_btn"}>
                   <img 
-                  src={"/public/icons/shopping-cart.svg"}
+                  src={"/icons/shopping-cart.svg"}
                   style={{display: "flex"}} 
                    />
                 </Button>
@@ -264,11 +264,17 @@ export function OneRestaurant() {
                 <p>Eng mazali oshhona</p>
               </div>
           </Box>
-          <Box className={"about_right"}>
-          {Array.from(Array(4).keys()).map((ele, index) => {
+          <Box className={"about_right"}
+           >
+          {Array.from(Array(3).keys()).map((ele, index) => {
             return (
               <Box display={"flex"} flexDirection={"row"} key={index}>
-                <div className={"about_rigth_img"}></div>
+                <div className={"about_rigth_img"}
+                >
+                  <img src={"/auth/cheifs.png"} 
+                
+                   />
+                </div>
                 <div className={"about_right_desc"}>
                   <span>Bizning Mohir Oshpazlarimiz</span>
                   <p>Bizning Oshpazlarimiz Chet Elada malaka oshirib kelishdi</p>
@@ -291,7 +297,8 @@ export function OneRestaurant() {
           <iframe 
           style={{marginTop: "60px"}}
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3846.8162804798862!2d127.11749407481565!3d35.83001977351638!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x35703ca8628865a7%3A0x6f839c441f3600f9!2sBurger%20King!5e0!3m2!1sru!2skr!4v1700493460281!5m2!1sru!2skr"
-           height="500"
+           height="500px"
+           width= "1320px"
            referrerPolicy="no-referrer-when-downgrade"
              ></iframe>
        </Stack>
