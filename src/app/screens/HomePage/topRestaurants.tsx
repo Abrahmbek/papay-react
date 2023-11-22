@@ -7,7 +7,7 @@ import Typography from '@mui/joy/Typography';
 import LocationOnRoundedIcon from '@mui/icons-material/LocationOnRounded';
 import { CssVarsProvider } from '@mui/joy/styles';
 import { CardOverflow, IconButton } from '@mui/joy';
-//import { FavoriteIcon } from '@mui/icons-material';
+import { FavoriteIcon } from '@mui/icons-material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { Favorite } from '@mui/icons-material';
 

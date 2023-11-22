@@ -1,14 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Favorite } from '@mui/icons-material';
-import { AspectRatio, Card, CardOverflow,IconButton } from '@mui/joy';
+import { AspectRatio,  IconButton } from '@mui/joy';
 import { Box, Button, Container, Stack } from '@mui/material';
 import { CssVarsProvider } from '@mui/joy/styles';
-import LocationOnRoundedIcon from '@mui/icons-material/LocationOnRounded';
-import CallIcon from '@mui/icons-material/Call';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import Typography from '@mui/joy/Typography';
-//import CardCover from '@mui/joy/CardCover';
+import CardCover from '@mui/joy/CardCover';
+import CardOverflow from '@mui/joy/CardOverflow';
+import Card from '@mui/joy/Card';
+import LocationOnRoundedIcon from '@mui/icons-material/LocationOnRounded';
+import CallIcon from '@mui/icons-material/Call';
 
 export function BestRestaurants() {
       return (
@@ -51,13 +53,13 @@ export function BestRestaurants() {
                        Pizzar
                     </Typography>
                     <Typography level='body-sm' sx={{ mt: 0.5, mb:2}}>
-                        <Link 
-                        href=""
-                        startDecorator={<LocationOnRoundedIcon />}
-                        textColor="neutral.700"
-                        >
-                       Tashkent, Yunus Abad 4-1
-                        </Link>
+                    <Link 
+                          href=""
+                          startDecorator={<LocationOnRoundedIcon />}
+                           textColor="neutral.700"
+                           >
+                          Tashkent, Yunus Abad 4-1
+                          </Link>
                         </Typography>
                         <Typography level='body-sm' sx={{ mt: 0.5, mb:2}}>
                         <Link 

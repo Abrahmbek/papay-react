@@ -418,7 +418,7 @@
       background-size: cover;
       object-fit: contain;
       background-repeat: no-repeat;
-      border-radius: 40px;
+      border-radius: 10px;
 }
 
 .homepage .article_box .article_info {
