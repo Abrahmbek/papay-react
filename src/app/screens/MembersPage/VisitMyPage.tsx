@@ -19,6 +19,8 @@ import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import { TuiEditor } from "../../components/tuiEditor/TuiEditor.tsx";
+import TViewer from "../../components/tuiEditor/TViewer.tsx";
 
 
 export function VisitMyPage(props: any) {
@@ -84,11 +86,15 @@ export function VisitMyPage(props: any) {
                      </TabPanel>
                      <TabPanel value={"4"}>
                        <Box className={"menu_name"} >Maqola yozish</Box>
-                       <Box className={"write_content"}></Box>
+                       <Box className={"write_content"}>
+                        <TuiEditor />
+                       </Box>
                      </TabPanel>
                      <TabPanel value={"5"}>
                        <Box className={"menu_name"}> Tanlangan Maqola </Box>
-                       <Box className={"menu_content"}></Box>
+                       <Box className={"menu_content"}>
+                        <TViewer text={`<h3>hello boss</h3>`}/>
+                       </Box>
                      </TabPanel>
                      <TabPanel value={"6"}>
                        <Box className={"menu_name"}>Malumotlarni o'zgartirish</Box>
@@ -125,10 +131,13 @@ export function VisitMyPage(props: any) {
                           <TelegramIcon />
                           <YouTubeIcon />
                         </Box>
-                        <Box className="user_medi_box">
-                           <p className="follows">Followers: 4   Following: 2</p>
-                          
-                        </Box>
+                        <Box className={"user_media_box_follow"}
+                                     sx={{
+                                         flexDirection: "row",
+                                     }}
+                                >
+                                    <p className={"follows"}>Followers: 3 Following: 2</p>
+                            </Box>
                         <p className="user_desc">"qo'shimcha malumot kiritilmagan</p>
                         <Box 
                          display={"flex"}

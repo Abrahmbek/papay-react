@@ -13,7 +13,7 @@ const followers =[
 
 export function MemberFollowers(props: any) {
       return (
-        <div className="my_followers" >
+       
         <Stack>
           {followers.map((follower) =>{
             const image_url ="/icons/odamcha.svg";
@@ -66,6 +66,6 @@ export function MemberFollowers(props: any) {
             );
           })}
         </Stack>
-        </div>
+      
       );
 }

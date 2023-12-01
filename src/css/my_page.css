@@ -158,7 +158,7 @@
     margin-left: 57px;
     position: relative;
     width: 372.58px;
-    height: 450px;
+    height: 408px;
     border-radius: 16px;
     display: flex;
     background: #FFF;
@@ -229,39 +229,41 @@
       line-height: 36px;
       color: #a1a1a1;
     }
-      
-    .my_page_right .user_media_box {
+    
+  .my_page_right .user_media_box {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 141.319px;
+    height: 20.318px;
+    margin-top: 10px;
+  }
+  
+  .my_page_right .user_media_box_follow {
+    position: relative;
+    flex-direction: row;
+    justify-content: space-evenly;
+  
+    color: #616164;
+    font-family: DM Sans;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+  
+  .my_page_right .user_media_box_follow .follows {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+    
+    
+    .my_page_right .user_media_box .user_desc {
       position: relative;
       display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      width: 141.319px;
-      height: 20.318px;
-      margin-top: 10px;
-    }
-    
-    .my_page_right .user_media_box_follow {
-      position: relative;
-      flex-direction: row;
-      justify-content: space-evenly;
-    
-      color: #616164;
-      font-family: DM Sans;
-      font-size: 16px;
-      font-style: normal;
-      font-weight: 400;
-      line-height: normal;
-    }
-    
-    .my_page_right .user_media_box_follow .follows {
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-    }
-      
-    .my_page_right .user_desc {
-      position: relative;
-      display: flex;
+      flex-direction: column;
       color: #616164;
       font-family: DM Sans;
       font-size: 16px;
@@ -297,7 +299,7 @@
     .my_page_menu .MuiTabs-flexContainer {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+     
     }
     /* FOLLOWERS STYLES:  */
   
@@ -306,7 +308,7 @@
       flex-direction: row;
       height: 140px;
       margin-bottom: 15px;
-      justify-content: space-between;
+     
       align-items: center;
       border-radius: 17px;
       background: linear-gradient(
@@ -323,9 +325,14 @@
       width: 100%;
       height: 100%;
       display: flex;
-      
+    
+
     }
     
+    .follow_box {
+      width: 100%;
+      height: 100%;
+    }
     .follow_box .right_wrap_user {
       display: flex;
       flex-direction: row;
