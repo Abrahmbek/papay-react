@@ -1,5 +1,5 @@
-import { configureStore, ThunkAction, Action, getDefaultMiddleware } from '@reduxjs/toolkit';
-import HomePageReducer from './screens/HomePage/slice';
+import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
+import HomePageReducer from './screens/HomePage/slice.ts';
 import reduxLogger from "redux-logger";
 //import counterReducer from '../features/counter/counterSlice';
 

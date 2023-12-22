@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Container } from "@mui/material";
+//import { Container } from "@mui/material";
 import { Statistics } from './statistics.tsx';
 import { TopRestaurants } from './topRestaurants.tsx';
 import { BestRestaurants } from './bestRestaurants.tsx';
@@ -42,7 +42,7 @@ useEffect(() => {
  
   setTopRestaurants([]);
 
-}, []);
+},[]);
 
       return <div className='homepage'>
           <Statistics/>
