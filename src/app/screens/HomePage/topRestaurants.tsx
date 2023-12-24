@@ -42,6 +42,7 @@ export function TopRestaurants() {
                     <Stack sx={{mt: "43px"}} flexDirection={"row"} m={"16px"}>
                      { topRestaurants.map((ele: Restaurant) =>{
                         const image_path = `${serverApi}/${ele.mb_image}`;
+                        console.log( "Imagess:::" , ele);
                         return (
                <CssVarsProvider key={ele._id}>
                    <Card sx={{ minHeight: 430, minWidth: 325, mr: "35px", cursor: "pointer"}}>

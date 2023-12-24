@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link  from "@mui/joy/Link";
 import { Favorite } from '@mui/icons-material';
 import { AspectRatio,  IconButton } from '@mui/joy';
 import { Box, Button, Container, Stack } from '@mui/material';
@@ -20,6 +20,7 @@ import {createSelector} from "reselect";
 import {retrieveBestRestaurants} from "../../screens/HomePage/selector.ts";
 import { Restaurant } from '../../../types/user.ts';
 import { serverApi } from '../../../lib/config.ts';
+
 
 /** REDUX SELECTOR */
 const bestRestaurantRetriever = createSelector (
@@ -74,7 +75,7 @@ export function BestRestaurants() {
                           {ele.mb_nick} restaurant
                          </Typography>
                          <Typography level='body-sm' sx={{ mt: 0.5, mb:2}}>
-                         <Link 
+                         <Link
                                href=""
                                startDecorator={<LocationOnRoundedIcon />}
                                 textColor="neutral.700"
@@ -83,7 +84,7 @@ export function BestRestaurants() {
                                </Link>
                              </Typography>
                              <Typography level='body-sm' sx={{ mt: 0.5, mb:2}}>
-                             <Link 
+                             <Link
                              href=""
                              startDecorator={<CallIcon />}
                              textColor="neutral.700"
