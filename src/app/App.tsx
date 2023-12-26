@@ -1,5 +1,5 @@
 import { Box, Button, Container, Stack, Typography } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../css/App.css';
 import '../css/navbar.css';
 import '../css/footer.css';
@@ -21,20 +21,109 @@ import { NavbarHome } from './components/header/index.tsx';
 import { NavbarRestaurant } from './components/header/restaurant.tsx';
 import { NavbarOthers } from './components/header/others.tsx';
 import { Footer } from './components/footer/index.tsx';
+import AuthanticationModal from "./components/auth/index.tsx";
+import { serverApi } from '../lib/config.ts';
+import { sweetFailureProvider, sweetTopSmallSuccessAlert } from '../lib/sweetAlert.ts';
+import { Definer } from '../lib/Definer.ts';
+import MemberApiService from './apiServices/memberApiService.ts';
+//import "../app/apiServices/verify.ts";
+import { Member } from '../types/user.ts';
 
 function App() {
+
+  /**INITIALIZATIONS */
+  const [verifiedMemberData, setVerifiedMemberData] = useState<Member | null>(null);
+
   const [path, SetPath] = useState();
   const manin_path = window.location.pathname;
+  const [signUpOpen, setSignUpOpen] = useState(false);
+  const [loginOpen, setLoginOpen] = useState(false);
 
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+ 
+
+  useEffect(() =>{
+  console.log("==== useEfeect: App ===");
+  const memberDataJson: any = localStorage.getItem("member_data")
+  ? localStorage.getItem("member_data")
+  : null;
+  const member_data = memberDataJson ? JSON.parse(memberDataJson) : null;
+  if(member_data) {
+    member_data.mb_image = member_data.mb_image 
+    ? `${serverApi}/${member_data.mb_image}`
+    :"/public/auth/default_user1.svg";
+    setVerifiedMemberData(member_data);
+  }
+  },[signUpOpen, loginOpen]);
+
+  /**HANDLERS */
+  const handleSignUpOpen = () =>  setSignUpOpen(true);
+  
+  const handleSignUpClose = () =>   setSignUpOpen(false);
+  
+  const handleLoginOpen = () =>   setLoginOpen(true);
+
+  const handleLoginClose = () =>   setLoginOpen(false);
+  const handleLogOutClick =( event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+};
+
+const handleCloseLogOut =( event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(null);
+};
+
+const handleLogoutRequest = async () => {
+  try {
+    const memberApiService = new MemberApiService();
+    await memberApiService.logOutRequest();
+    await sweetTopSmallSuccessAlert("success", 700, true);
+    localStorage.removeItem("member_data");
+  } catch(err: any) {
+    console.log(err);
+    sweetFailureProvider(Definer.general_err1);
+  }
+}
+  
   return (
     <Router>
 
      {manin_path === "/" ? (
-      <NavbarHome SetPath={SetPath}/>
+      <NavbarHome 
+      SetPath={SetPath}
+      handleLoginOpen={handleLoginOpen}
+      handleSignUpOpen={handleSignUpOpen}
+      anchorEl={anchorEl}
+      open={open}
+      handleLogOutClick={handleLogOutClick}
+      handleCloseLogOut={handleCloseLogOut}
+      handleLogoutRequest={handleLogoutRequest}
+      verifiedMemberData={verifiedMemberData}
+      />
      ) : manin_path.includes("/restaurant") ? (
-      <NavbarRestaurant SetPath={SetPath}/> 
+      <NavbarRestaurant 
+      SetPath={SetPath}
+      handleLoginOpen={handleLoginOpen}
+      handleSignUpOpen={handleSignUpOpen}
+      anchorEl={anchorEl}
+      open={open}
+      handleLogOutClick={handleLogOutClick}
+      handleCloseLogOut={handleCloseLogOut}
+      handleLogoutRequest={handleLogoutRequest}
+      verifiedMemberData={verifiedMemberData}
+      /> 
      ) : (
-      <NavbarOthers SetPath={SetPath} />
+      <NavbarOthers
+       SetPath={SetPath}
+       handleLoginOpen={handleLoginOpen}
+       handleSignUpOpen={handleSignUpOpen}
+       anchorEl={anchorEl}
+      open={open}
+      handleLogOutClick={handleLogOutClick}
+      handleCloseLogOut={handleCloseLogOut}
+      handleLogoutRequest={handleLogoutRequest}
+       verifiedMemberData={verifiedMemberData}
+        />
      )}
 
    
@@ -64,6 +153,14 @@ function App() {
       </Switch>
 
      <Footer />  
+     <AuthanticationModal
+      loginOpen={loginOpen}
+      handleLoginOpen={handleLoginOpen}
+      handleLoginClose={handleLoginClose}
+      signUpOpen = {signUpOpen}
+      handleSignUpOpen={handleSignUpOpen}
+      handleSignUpClose={handleSignUpClose}
+     />
   </Router>
   );
 }

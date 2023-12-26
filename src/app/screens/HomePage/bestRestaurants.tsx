@@ -6,7 +6,7 @@ import { Box, Button, Container, Stack } from '@mui/material';
 import { CssVarsProvider } from '@mui/joy/styles';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import Typography from '@mui/joy/Typography';
-import CardCover from '@mui/joy/CardCover';
+//import CardCover from '@mui/joy/CardCover';
 import CardOverflow from '@mui/joy/CardOverflow';
 import Card from '@mui/joy/Card';
 import LocationOnRoundedIcon from '@mui/icons-material/LocationOnRounded';
