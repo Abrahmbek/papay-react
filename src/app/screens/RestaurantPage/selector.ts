@@ -6,19 +6,19 @@ export const retrieveTargetRestaurants = createSelector(
       selectRestaurantPage,
       (RestaurantPage) => RestaurantPage.targetRestaurants
 );
-export const retrieveTargetRestaurants = createSelector(
+export const retrieveRandomRestaurants = createSelector(
       selectRestaurantPage,
       (RestaurantPage) => RestaurantPage.randomRestaurants
 );
-export const retrieveTargetRestaurants = createSelector(
+export const retrieveChosenRestaurants = createSelector(
       selectRestaurantPage,
       (RestaurantPage) => RestaurantPage.chosenRestaurant
 );
-export const retrieveTargetRestaurants = createSelector(
+export const retrieveTargetProducts = createSelector(
       selectRestaurantPage,
       (RestaurantPage) => RestaurantPage.targetProducts
 );
-export const retrieveTargetRestaurants = createSelector(
+export const retrieveChosenProduct = createSelector(
       selectRestaurantPage,
       (RestaurantPage) => RestaurantPage.chosenProduct
 );

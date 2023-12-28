@@ -25,7 +25,7 @@ class ProductApiService {
              const products:Product[] = result.data.data;
              return products;
             }catch (err: any) {
-              console.log(`ERORR::: getYargetRestaurants ${err.message}`);
+              console.log(`ERORR::: getTargetRestaurants ${err.message}`);
             throw err;
             }
       }
