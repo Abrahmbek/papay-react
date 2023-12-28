@@ -3,6 +3,7 @@ import axios from "axios";
 import assert from "assert";
 import {Definer} from "../../lib/Definer.ts";
 import { Member } from "../../types/user.ts";
+import { MemberLiken } from "../../types/others.ts";
 
 
 class MemberApiService {
@@ -57,6 +58,24 @@ class MemberApiService {
             return logout_result === "success";
             }catch(err: any) {
                   console.log(`ERORR::: logOutRequest ${err.message}`);
+                  throw err;
+            }
+      }
+
+      public async memberLikeTarget(data: any) {
+            try{
+                  const url = "/member-liken",
+            result = await   axios.post(this.path + url, data, {withCredentials: true,
+            } );
+            
+            assert.ok(result?.data, Definer.general_err1);
+            assert.ok(result?.data?.state !=='fail', result?.data?.message);
+            
+            console.log("state:", result.data.state);
+            const like_result: MemberLiken = result.data.data;
+            return like_result;
+            }catch(err: any) {
+                  console.log(`ERORR::: memberLikeTarget${err.message}`);
                   throw err;
             }
       }

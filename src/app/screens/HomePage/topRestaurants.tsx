@@ -1,5 +1,5 @@
 import { Box, Container, Stack } from '@mui/material';
-import React from 'react';
+import React, { useRef } from 'react';
 import Card from '@mui/joy/Card';
 import CardCover from '@mui/joy/CardCover';
 import CardContent from '@mui/joy/CardContent';
@@ -13,12 +13,15 @@ import { Favorite } from '@mui/icons-material';
 
 // REDUX
 import { useSelector} from "react-redux";
-
 import {createSelector} from "reselect";
-
 import {retrieveTopRestaurants} from "../../screens/HomePage/selector.ts";
 import { Restaurant } from '../../../types/user.ts';
 import { serverApi } from '../../../lib/config.ts';
+import  assert  from 'assert';
+import {Definer} from "../../../lib/Definer.ts";
+import {sweetErrorHandling, sweetTopSmallSuccessAlert} from "../../../lib/sweetAlert.ts"
+import MemberApiService from '../../apiServices/memberApiService.ts';
+import { useHistory } from 'react-router-dom';
 
 
 /** REDUX SELECTOR */
@@ -30,7 +33,44 @@ const topRestaurantRetriever = createSelector (
  );
 
 export function TopRestaurants() {
+   /**INITIALIZATIONS */
+   const history = useHistory();
    const { topRestaurants } = useSelector( topRestaurantRetriever);
+   console.log("TopRestaurants", topRestaurants);
+   const refs: any = useRef([]);
+
+   /** HANDLERS */
+
+   const chosenRestaurantHandler = (id: string) => {
+      history.push(`/restaurant/${id}`);
+   }
+
+  const targetLikeTop= async (e: any, id: string) => {
+   try{ 
+    assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
+
+    const memberService = new MemberApiService(), 
+    like_result: any = await memberService.memberLikeTarget({
+      like_ref_id: id,
+      group_type: "member",
+
+    });
+    assert.ok(like_result, Definer.general_err1);
+
+    if(like_result.like_status > 0) {
+      e.target.style.fill = "red";
+      refs.current[like_result.like_ref_id].innerHTML++;
+    } else {
+      e.target.style.fill = "white";
+      refs.current[like_result.like_ref_id].innerHTML--;
+    }
+    sweetTopSmallSuccessAlert("success", 700, false);
+   }catch(err: any) {
+      console.log("targetLikeTop, EROOR:", err);
+      sweetErrorHandling(err).then();
+   }
+  }
+
       return (
             <div className='top_restaurant_frame'>
                   <Container>
@@ -45,7 +85,9 @@ export function TopRestaurants() {
                         console.log( "Imagess:::" , ele);
                         return (
                <CssVarsProvider key={ele._id}>
-                   <Card sx={{ minHeight: 430, minWidth: 325, mr: "35px", cursor: "pointer"}}>
+                   <Card
+                   onClick={()=> chosenRestaurantHandler(ele._id)}
+                   sx={{ minHeight: 430, minWidth: 325, mr: "35px", cursor: "pointer"}}>
                         <CardCover>
                         <img
                         src= {image_path}
@@ -93,8 +135,11 @@ export function TopRestaurants() {
                               bottom: 45,
                               transform: "translateY(50%)",
                               color: "rgba(0,0,0,.4)",
-                          }}>
-                              <Favorite style={{fill: 
+                          }}
+                          onClick={(e) => {e.stopPropagation()}}
+                          >
+                              <Favorite onClick={(e) => targetLikeTop(e, ele._id)}
+                              style={{fill: 
                               ele?.me_liked && ele?.me_liked[0]?.my_favorite
                               ? "red"
                               : "white"
@@ -123,7 +168,10 @@ export function TopRestaurants() {
                               display: "flex",
                            }}
                           >
-                             <div>{ele.mb_likes}</div>
+                             <div
+                             ref={(element) => (refs.current[ele._id] = element)}
+                             >
+                               {ele.mb_likes}</div>
                              <Favorite sx={{ fontsize: 20, marginLeft: "5px"}} /> 
                           </Typography>
                        </CardOverflow>
@@ -140,4 +188,8 @@ export function TopRestaurants() {
                   </Container>
             </div>
       );
+}
+
+function sweetErorrHandling(err: any) {
+   throw new Error('Function not implemented.');
 }
