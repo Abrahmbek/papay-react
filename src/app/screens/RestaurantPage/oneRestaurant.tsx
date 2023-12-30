@@ -93,12 +93,17 @@ export function OneRestaurant() {
   .then((data) => setRandomRestaurants(data))
   .catch((err) => console.log(err));
 
+  restaurantService
+  .getChosenRestaurants(chosenRestaurantId)
+  .then((data) => setChosenRestaurant(data))
+  .catch((err) => console.log(err));
+
   const productService = new ProductApiService();
   productService
   .getTargetProducts(targetProductSearchObj)
   .then((data)=> setTargetProducts(data))
   .catch((err) => console.log(err));
- },[ targetProductSearchObj, productRebuild]);
+ },[chosenRestaurantId, targetProductSearchObj, productRebuild]);
      
      /**HANDLERS */
 
@@ -118,6 +123,10 @@ export function OneRestaurant() {
       targetProductSearchObj.page = 1;
       targetProductSearchObj.order = order;
       setTargetProductSearchObj ({...targetProductSearchObj});
+     };
+
+     const chosenDishHandler = (id: string) => {
+      history.push(`/restaurant/dish/${id}`);
      };
 
      const targetLikeProduct = async (e: any) => {
@@ -316,7 +325,7 @@ export function OneRestaurant() {
                 </Button>
                 <Button className={"view_btn"}>
                   <img 
-                  src={"/icons/shopping-cart.svg"}
+                  src={"/icons/shopping-cart.svg"} alt=''
                   style={{display: "flex"}} 
                    />
                 </Button>
@@ -367,7 +376,7 @@ export function OneRestaurant() {
             return (
               <Box className={"review_box"} key={index}>
                 <Box display={"flex"} justifyContent={"center"}>   
-                  <img src={"/auth/cute_girl.jpg"} 
+                  <img src={"/auth/cute_girl.jpg"} alt=''
                    className={"review_img"}
                    />
                 </Box>
@@ -402,12 +411,12 @@ export function OneRestaurant() {
           <Box
              className={"about_left"}
             sx={{
-              backgroundImage: `url("/restaurant/boyin_food.jpg")`,
+              backgroundImage: `url(${serverApi}/${chosenRestaurant?.mb_image})`,
             }}
             >
               <div className={"about_left_desc"}>
-                <span>KFS</span>
-                <p>Eng mazali oshhona</p>
+                <span>{chosenRestaurant?.mb_nick}</span>
+                <p>{chosenRestaurant?.mb_description}</p>
               </div>
           </Box>
           <Box className={"about_right"}

@@ -12,6 +12,7 @@ import { setTrendProducts } from './slice.ts';
 import { useDispatch } from 'react-redux';
 import ProductApiService from '../../apiServices/productApiService.ts';
 import { retrieveTrendproducts } from './selector.ts';
+import { useHistory } from 'react-router-dom';
 
 /**REDUX SLICE */
 const actionDispatch = (dispach: Dispatch) => ({
@@ -29,7 +30,7 @@ const trendProductsRetriever = createSelector (
 export function BestDishes() {
 
       /**INITIALIZATION */
-
+      const history = useHistory();
       const {setTrendProducts} = actionDispatch(useDispatch());
       const { trendProducts } = useSelector( trendProductsRetriever);
       useEffect(() => {
@@ -38,6 +39,14 @@ export function BestDishes() {
         .then((data) =>{setTrendProducts(data)}) 
         .catch(err => console.log(err))
       }, []);
+
+      /**HANDLERS */
+
+      
+     const chosenDishHandler = (id: string) => {
+      history.push(`/restaurant/dish/${id}`);
+     };
+
       return (
             <div className='best_dishes_frame'>
       <Container>
@@ -57,8 +66,11 @@ export function BestDishes() {
                                   }}
                                >
                                <div className={"dish_sale"}>{size_volume}</div>
-                               <div className={'view_btn'}>
-                               Batafsil Ko'rish
+                               <div  className={'view_btn'}>
+                                    <div
+                                    onClick={() => chosenDishHandler(product._id)}>  
+                                    Batafsil Ko'rish</div>
+                             
                                <img
                                      src={"/icons/Arrow.png"} alt=''
                                      style={{ marginLeft: "9px" }}

@@ -1,4 +1,4 @@
-import React, {  useState } from "react";
+import React, {  useEffect, useState } from "react";
 import { Box, Container, Stack } from "@mui/material";
 import "../../../css/order.css";
 import Tab from "@mui/material/Tab";
@@ -10,11 +10,35 @@ import PausedOrders from "../../../app/components/orders/pausedOrders.tsx";
 import ProcessOrders from "../../../app/components/orders/processOrders.tsx";
 import FinishedOrders from "../../../app/components/orders/finishedOrders.tsx";
 
+
+
+// REDUX
+import { useDispatch} from "react-redux";
+
+import { Dispatch } from '@reduxjs/toolkit';
+import {setPausedOrders, setProcessOrders, setFinishedOrders} from "../../screens/OrdersPage/slice.ts";
+import { Order } from "../../../types/order.ts";
+
+
+/** REDUX Slice */
+const actionDispatch = (dispatch: Dispatch) => ({
+ setPausedOrders: (data: Order[]) => dispatch( setPausedOrders(data)),
+ setProcessOrders: (data: Order[]) => dispatch(setProcessOrders(data)),
+ setFinishedOrders: (data: Order[]) => dispatch(setFinishedOrders(data)),
+ 
+});
+
+
 export function OrdersPage() {
   /**INITIALIZATIONS */
   const [value, setValue] = useState("1");
+  const {setPausedOrders, setProcessOrders, setFinishedOrders} = 
+  actionDispatch(useDispatch());
 
- 
+
+ useEffect(() => {
+  
+ })
 
   /**  HANDLERS */
   const handleChange = (event: any, newValue: string) => {
