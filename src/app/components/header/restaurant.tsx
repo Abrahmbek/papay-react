@@ -7,6 +7,7 @@ import { Badge, Box, Button, Container,
            Stack } from '@mui/material';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import Basket from './basket.tsx';
 
 export function  NavbarRestaurant(props: any) {
     return ( <div className='format_restaurant home_navbar'>
@@ -61,20 +62,16 @@ export function  NavbarRestaurant(props: any) {
                         </NavLink>
                   </Box>
                    
-                  <Box className="hover_line">
-                        <IconButton 
-                          aria-label="cart"
-                          id="basic-button"
-                           aria-controls={undefined}
-                           aria-haspopup="true"
-                            aria-expanded={undefined}
-                         >
-                              <Badge badgeContent={3} color='secondary'>
-                               <img src="/icons/shopping-cart.svg" alt="" />
-                              </Badge>
-                              
-                        </IconButton>
-                  </Box>
+                 <Basket cartItems={props.cartItems} 
+                 onAdd={props.onAdd} 
+                 onRemove={props.onRemove}
+                 onDelete={props.onDelete}
+                 onDeleteAll={props.onDeleteAll}
+                 
+                 />
+
+
+
                   {!props.verifiedMemberData ?  (
                         <Box>
                         <Button variant='contained' 

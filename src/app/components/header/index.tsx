@@ -5,6 +5,7 @@ import { Badge, Box, Button,
 import { Logout } from '@mui/icons-material';
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import Basket from './basket.tsx';
 
 export function  NavbarHome(props: any) {
     
@@ -62,20 +63,14 @@ export function  NavbarHome(props: any) {
                         </NavLink>
                   </Box>
                    
-                  <Box className="hover_line">
-                        <IconButton 
-                          aria-label="cart"
-                          id="basic-button"
-                           aria-controls={undefined}
-                           aria-haspopup="true"
-                            aria-expanded={undefined}
-                         >
-                              <Badge badgeContent={3} color='secondary'>
-                               <img src="/icons/shopping-cart.svg" alt="" />
-                              </Badge>
-                              
-                        </IconButton>
-                  </Box>
+                  <Basket cartItems={props.cartItems} 
+                 onAdd={props.onAdd} 
+                 onRemove={props.onRemove}
+                 onDelete={props.onDelete}
+                 onDeleteAll={props.onDeleteAll}
+                 
+                 />
+
                   {!props.verifiedMemberData ?  (
                         <Box>
                         <Button variant='contained' 

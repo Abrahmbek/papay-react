@@ -6,15 +6,15 @@ import { OneRestaurant } from './oneRestaurant.tsx';
 import { AllRestaurant } from './allRestaurants.tsx';
 import '../../../css/restaurant.css';
 
-export function RestaurantPage() {
+export function RestaurantPage(props: any) {
       let restaurant = useRouteMatch();
       return  <div className="restaurant_page">
          <Switch>
             <Route path={`${restaurant.path}/dish/:dish_id`}>
-              <ChoosenDish />
+              <ChoosenDish onAdd={props.onAdd} />
              </Route>
             <Route path={`${restaurant.path}/:restaurant_id`}>
-              <OneRestaurant />
+              <OneRestaurant onAdd={props.onAdd} />
             </Route>
             <Route path={`${restaurant.path}`}>
               <AllRestaurant />

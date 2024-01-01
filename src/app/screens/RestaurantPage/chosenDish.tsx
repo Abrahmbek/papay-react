@@ -58,7 +58,7 @@ const chosenRestaurantRetriever = createSelector (
 
 const chosen_list =Array.from(Array(3).keys());
 
-export function ChoosenDish() {
+export function ChoosenDish(props: any) {
      /**INITIALIZATIONS */
 
      const [productRebuild, setProductRebuild] = useState<Date>(new Date())
@@ -216,7 +216,11 @@ export function ChoosenDish() {
             <span>$ {chosenProduct?.product_price}</span>
            </div>
            <div className={"button_box"}>
-              <Button variant="contained">Savatga Qo'shish</Button>
+              <Button variant="contained" 
+               onClick={() => {
+                props.onAdd(chosenProduct);
+               }}
+              >Savatga Qo'shish</Button>
            </div>
         </Box>
        </Stack>
