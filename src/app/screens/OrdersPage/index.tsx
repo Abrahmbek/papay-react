@@ -18,6 +18,8 @@ import { useDispatch} from "react-redux";
 import { Dispatch } from '@reduxjs/toolkit';
 import {setPausedOrders, setProcessOrders, setFinishedOrders} from "../../screens/OrdersPage/slice.ts";
 import { Order } from "../../../types/order.ts";
+import OrderApiService from "../../apiServices/orderApiService.ts";
+import { Member } from "../../../types/user.ts";
 
 
 /** REDUX Slice */
@@ -29,16 +31,29 @@ const actionDispatch = (dispatch: Dispatch) => ({
 });
 
 
-export function OrdersPage() {
+export function OrdersPage(props: any) {
   /**INITIALIZATIONS */
   const [value, setValue] = useState("1");
   const {setPausedOrders, setProcessOrders, setFinishedOrders} = 
   actionDispatch(useDispatch());
 
+  const verifiedMemberData: Member | null = props.verifiedMemberData;
 
  useEffect(() => {
-  
- })
+  const orderService = new OrderApiService();
+  orderService
+  .getMyOrders("paused")
+  .then((data) => setPausedOrders(data))
+  .catch((err) => console.log(err));
+  orderService
+  .getMyOrders("process")
+  .then((data) => setProcessOrders(data))
+  .catch((err) => console.log(err));
+  orderService
+  .getMyOrders("finished")
+  .then((data) => setFinishedOrders(data))
+  .catch((err) => console.log(err));
+ }, [props.orderRebuild]);
 
   /**  HANDLERS */
   const handleChange = (event: any, newValue: string) => {
@@ -73,9 +88,9 @@ export function OrdersPage() {
               </Box>
             </Box>
             <Stack className={"order_main_content"}>
-              <PausedOrders />
-              <ProcessOrders />
-              <FinishedOrders />
+              <PausedOrders setOrderRebuild={props.setOrderRebuild} />
+              <ProcessOrders setOrderRebuild={props.setOrderRebuild}/>
+              <FinishedOrders setOrderRebuild={props.setOrderRebuild}/>
             </Stack>
           </TabContext>
         </Stack>
@@ -89,10 +104,11 @@ export function OrdersPage() {
               alignItems={"center"}
             >
               <div className={"order_user_img"}>
-                <img src={"/icons/odamcha.svg"} />
+                <img src={verifiedMemberData?.mb_image} alt="" />
+                <img src={"/icons/odamcha.svg"}  alt=""/>
               </div>
-              <span className={"order_user_name"}>Zarina</span>
-              <span className={"order_user_prof"}>Foydalanuvchi</span>
+              <span className={"order_user_name"}>{verifiedMemberData?.mb_nick}</span>
+              <span className={"order_user_prof"}>{verifiedMemberData?.mb_nick ?? "Foydalanuvchi"}</span>
             </Box>
             <Box className={"line"}></Box>
             <Box
@@ -105,7 +121,7 @@ export function OrdersPage() {
               <div style={{ display: "flex" }}>
                 <LocationOnIcon />
               </div>
-              <div>Yunusabad 1-4, Tashkent</div>
+              <div>{verifiedMemberData?.mb_address ?? "Manzil kiritilmagan"}</div>
             </Box>
           </Box>
           <Box className={"payment_box"}>
@@ -118,10 +134,10 @@ export function OrdersPage() {
               <input type="text" placeholder="Zarina" />
             </form>
             <Box className={"card_types"}>
-              <img className={"card"} src="/icons/western_union.svg" />
-              <img className={"card"} src="/icons/master_card.svg" />
-              <img className={"card"} src="/icons/paypal.svg" />
-              <img className={"card"} src="/icons/visa.svg" />
+              <img className={"card"} src="/icons/western_union.svg" alt="" />
+              <img className={"card"} src="/icons/master_card.svg"  alt=""/>
+              <img className={"card"} src="/icons/paypal.svg" alt=""/>
+              <img className={"card"} src="/icons/visa.svg" alt="" />
             </Box>
           </Box>
         </Stack>

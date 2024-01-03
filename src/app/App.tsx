@@ -40,6 +40,7 @@ function App() {
   const manin_path = window.location.pathname;
   const [signUpOpen, setSignUpOpen] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
+  const [orderRebuild, setOrderRebuild] = useState<Date>(new Date());
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -103,7 +104,7 @@ const onAdd = (product: Product) => {
      );
   
     setCartItems(cart_updated);
-    localStorage.setItem("cart-data", JSON.stringify(cart_updated));
+    localStorage.setItem("cart_data", JSON.stringify(cart_updated));
   }else {
     const new_item: CartItem = {
       _id: product._id,
@@ -114,7 +115,7 @@ const onAdd = (product: Product) => {
     };
     const cart_updated = [...cartItems, {...new_item}];
     setCartItems(cart_updated);
-    localStorage.setItem("cart-data", JSON.stringify(cart_updated));
+    localStorage.setItem("cart_data", JSON.stringify(cart_updated));
   }
 };
 const onRemove = (item: CartItem) => {
@@ -125,7 +126,7 @@ const onRemove = (item: CartItem) => {
   );
   
   setCartItems(cart_updated);
-  localStorage.setItem("cart-data", JSON.stringify(cart_updated));
+  localStorage.setItem("cart_data", JSON.stringify(cart_updated));
 
   }else {
    const cart_updated = cartItems.map((ele: CartItem) => 
@@ -134,7 +135,7 @@ const onRemove = (item: CartItem) => {
     : ele
    );
    setCartItems(cart_updated);
-   localStorage.setItem("cart-data", JSON.stringify(cart_updated));
+   localStorage.setItem("cart_data", JSON.stringify(cart_updated));
   }
 };
 const onDelete = (item: CartItem) => {
@@ -142,7 +143,7 @@ const onDelete = (item: CartItem) => {
   );
   
   setCartItems(cart_updated);
-  localStorage.setItem("cart-data", JSON.stringify(cart_updated));
+  localStorage.setItem("cart_data", JSON.stringify(cart_updated));
 };
 const onDeleteAll = () => {
   setCartItems([]);
@@ -167,6 +168,7 @@ const onDeleteAll = () => {
       onRemove={ onRemove}
       onDelete={onDelete}
       onDeleteAll={onDeleteAll}
+      setOrderRebuild={setOrderRebuild}
       />
      ) : manin_path.includes("/restaurant") ? (
       <NavbarRestaurant 
@@ -184,6 +186,7 @@ const onDeleteAll = () => {
       onRemove={ onRemove}
       onDelete={onDelete}
       onDeleteAll={onDeleteAll}
+      setOrderRebuild={setOrderRebuild}
       /> 
      ) : (
       <NavbarOthers
@@ -201,6 +204,7 @@ const onDeleteAll = () => {
        onRemove={ onRemove}
        onDelete={onDelete}
        onDeleteAll={onDeleteAll}
+       setOrderRebuild={setOrderRebuild}
         />
      )}
 
@@ -214,7 +218,8 @@ const onDeleteAll = () => {
           <CommunityPage />
         </Route>
         <Route path="/orders">
-          <OrdersPage />
+          <OrdersPage orderRebuild={orderRebuild} setOrderRebuild={setOrderRebuild}
+          verifiedMemberData={verifiedMemberData}/>
         </Route>
         <Route path="/member-page">
           <MembersPage/>

@@ -35,12 +35,16 @@ export default function Basket(props: any) {
 
   const processOrderHandler = async () => {
       try {
+        console.log("localStorage:::",localStorage.getItem("member_data") )
     assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
     const order = new OrderApiService();
     await order.createOrder(cartItems);
 
     onDeleteAll();
     handleClose();
+
+   props.setOrderRebuild( new Date());
+                 
 
     history.push("/orders");
       } catch(err: any) {

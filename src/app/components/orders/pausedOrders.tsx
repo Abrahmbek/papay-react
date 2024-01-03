@@ -8,6 +8,11 @@ import {  useSelector} from "react-redux";
 import {createSelector} from "reselect";
 import { 
   retrievePausedOrders } from "../../screens/OrdersPage/selector.ts";
+import { Order } from "../../../types/order.ts";
+import { serverApi } from "../../../lib/config.ts";
+import { Product } from "../../../types/product.ts";
+import { sweetErrorHandling, sweetFailureProvider } from "../../../lib/sweetAlert.ts";
+import OrderApiService from "../../apiServices/orderApiService.ts";
 
    /** REDUX SELECTOR */
 const pausedOrdersRetriever = createSelector (
@@ -17,40 +22,78 @@ const pausedOrdersRetriever = createSelector (
   })
 );
 
-const pauseOrders = [
-  [1, 2, 3],
-  [1, 2, 3],
-  [1, 2, 3],
-];
+
 
 export default function PausedOrders(props: any) {
     /**INITIALIZATIONS */
-   // const { pausedOrders} = useSelector( pausedOrdersRetriever );
+   const { pausedOrders} = useSelector( pausedOrdersRetriever );
+
+  /**HANDLER */
+ const deleteOrderHandler = async (event: any) => {
+   try {
+  const order_id = event.target.value;
+  const data = {order_id: order_id, order_status: "DELETED"};
+
+  if(!localStorage.getItem("member_data")) {
+    sweetFailureProvider("Please Login first", true);
+  }
+  let confirmation = window.confirm("Buyurtmani bekor qilishni hohlaysizmi?");
+  if(confirmation) {
+     const orderService = new OrderApiService();
+     await orderService.updateOrderStatus(data);
+     props.setOrderRebuild(new Date());
+  }
+   } catch(err) {
+    console.log("deleteorderhandler, ERROR", err);
+    sweetErrorHandling(err).then();
+   }
+ }
+ const processOrderHandler = async (event: any) => {
+  try {
+ const order_id = event.target.value;
+ const data = {order_id: order_id, order_status: "PROCESS"};
+
+ if(!localStorage.getItem("member_data")) {
+   sweetFailureProvider("Please Login first", true);
+ }
+ let confirmation = window.confirm("Buyurtmani tolashni tasdiqlaysizmi?");
+ if(confirmation) {
+    const orderService = new OrderApiService();
+    await orderService.updateOrderStatus(data);
+    props.setOrderRebuild(new Date());
+ }
+  } catch(err) {
+   console.log("deleteorderhandler, ERROR", err);
+   sweetErrorHandling(err).then();
+  }
+}
+
   return (
     <TabPanel value={"1"}>
       <Stack>
-        {pauseOrders?.map((order) => {
+        {pausedOrders?.map((order: Order) => {
           return (
             <Box className={"order_main_box"}>
               <Box className={"order_box_scroll"}>
-                {order.map((item) => {
-                  const image_path = `/restaurant/boyin_food.jpg`;
+                {order.order_items.map((item) => {
+                  const product: Product = order.product_data.filter(ele => ele._id === item.product_id)[0];
+                  const image_path = `${serverApi}/${product.product_images[0]}`;
                   return (
                     <Box className={"ordersName_price"}>
-                      <img src={image_path} className={"orderDishImg"} />
-                      <p className={"titleDish"}>Salad</p>
+                      <img src={image_path} className={"orderDishImg"} alt=""/>
+                      <p className={"titleDish"}>{product.product_name}</p>
                       <Box className={"priceBox"}>
-                        <p>$ 7 </p>
+                        <p>$ {item.item_price} </p>
                         <img
                           style={{ margin: "0 10px" }}
                           src={"/icons/close.svg"} alt=""
                         />
-                        <p> 3 </p>
+                        <p> {item.item_quantity} </p>
                         <img
                           style={{ margin: "0 10px" }}
-                          src={"/icons/pause.svg"}
+                          src={"/icons/pause.svg"} alt=""
                         />
-                        <p style={{ marginLeft: "15px" }}> $ 21</p>
+                        <p style={{ marginLeft: "15px" }}> $ {item.item_price * item.item_quantity}</p>
                       </Box>
                     </Box>
                   );
@@ -60,24 +103,34 @@ export default function PausedOrders(props: any) {
               <Box className={"total_price_box paused"}>
                 <div>
                   <span>Maxsulot narxi </span>
-                  <span>$ 21</span>
+                  <span>$ {order.order_total_amount - order.order_delivery_cost}</span>
                   <img
                     style={{ }}
-                    src={"/icons/plus.svg"}
+                    src={"/icons/plus.svg"} alt=""
                 />
                 </div>
                 <div>
                   <span>Yetkazish xizmati </span>
-                  <span>$ 2</span>
+                  <span>$ {order.order_delivery_cost}</span>
                 </div>
                 <div>
                   <span>Jami narx </span>
-                  <span>$ 23</span>
+                  <span>$ {order.order_total_amount}</span>
                 </div>
 
                 <div>
-                  <Button className="order_cancel">Bekor qilish</Button>
-                  <Button className="order_pay">To'lash</Button>
+                  <Button 
+                  value={order._id}
+                   onClick={deleteOrderHandler}
+                  className="order_cancel"
+              
+                  >Bekor qilish
+                  </Button>
+                  
+                  <Button 
+                   value={order._id}
+                   onClick={processOrderHandler}
+                  className="order_pay">To'lash</Button>
                 </div>
               </Box>
             </Box>
