@@ -50,7 +50,7 @@ export function OrdersPage(props: any) {
   .then((data) => setProcessOrders(data))
   .catch((err) => console.log(err));
   orderService
-  .getMyOrders("finished")
+  .getMyOrders("deleted")
   .then((data) => setFinishedOrders(data))
   .catch((err) => console.log(err));
  }, [props.orderRebuild]);
