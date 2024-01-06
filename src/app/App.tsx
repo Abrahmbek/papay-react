@@ -222,7 +222,7 @@ const onDeleteAll = () => {
           verifiedMemberData={verifiedMemberData}/>
         </Route>
         <Route path="/member-page">
-          <MembersPage/>
+          <MembersPage verifiedMemberData={verifiedMemberData}/>
         </Route>
         <Route path="/help">
           <HelpPage />
