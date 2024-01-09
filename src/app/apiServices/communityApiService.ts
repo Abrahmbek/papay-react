@@ -1,6 +1,6 @@
 import axios from "axios";
 import { serverApi } from "../../lib/config.ts";
-import { BoArticle, SearchArticlesObj } from "../../types/boArticle";
+import { BoArticle, SearchArticlesObj, SearchMemeberArticlesObj } from "../../types/boArticle";
 import assert from "assert";
 import { Definer } from "../../lib/Definer.ts";
 
@@ -29,6 +29,41 @@ class CommunityApiService {
                   throw err;
             }
             }
+
+            public async getMemberCommunityArticles ( data: SearchMemeberArticlesObj) {
+                  try{
+                        let url = `/community/articles?mb_id=${data.mb_id}&page=${data.page}&limit=${data.limit}`;
+                        const result = await axios.get(this.path + url, {withCredentials: true});
+                        
+                        assert.ok(result?.data, Definer.general_err1);
+                        assert.ok(result?.data?.state !== 'fail', result?.data?.message);
+                        console.log("state:", result.data.state);
+                
+                        const articles: BoArticle[] = result.data.data;
+                        return articles;
+                  }catch(err: any) {
+                        console.log(`getMemberCommunityArticles, ERORR:::  ${err.message}`);
+                        throw err;
+                  }
+                  }
+
+                  
+            public async getChosenArticle( art_id: string) {
+                  try{
+                        let url = `/community/single-article/${art_id}`;
+                        const result = await axios.get(this.path + url, {withCredentials: true});
+                        
+                        assert.ok(result?.data, Definer.general_err1);
+                        assert.ok(result?.data?.state !== 'fail', result?.data?.message);
+                        console.log("state:", result.data.state);
+                
+                        const article: BoArticle = result.data.data;
+                        return article;
+                  }catch(err: any) {
+                        console.log(` getChosenArticle, ERORR:::  ${err.message}`);
+                        throw err;
+                  }
+                  }
       }
 
 

@@ -79,6 +79,24 @@ class MemberApiService {
                   throw err;
             }
       }
+
+      public async getChosenMember(id: string) {
+            try{
+                  const url = `/member/${id}`,
+            result = await   axios.post(this.path + url, {withCredentials: true,
+            } );
+            
+            assert.ok(result?.data, Definer.general_err1);
+            assert.ok(result?.data?.state !=='fail', result?.data?.message);
+            
+            console.log("state:", result.data.state);
+            const member: Member = result.data.data;
+            return member;
+            }catch(err: any) {
+                  console.log(`ERORR::: memberLikeTarget${err.message}`);
+                  throw err;
+            }
+      }
 }
 
 

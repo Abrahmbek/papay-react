@@ -33,14 +33,17 @@ import { retrieveChosenMember ,
   retrieveChosenMemberBoArticles,
 retrieveChosenSingleBoArticle } from './selector.ts';
 import { Member } from "../../../types/user.ts";
-import { BoArticle } from "../../../types/boArticle.ts";
+import { BoArticle, SearchMemeberArticlesObj } from "../../../types/boArticle.ts";
+import { sweetErrorHandling, sweetFailureProvider } from "../../../lib/sweetAlert.ts";
+import CommunityApiService from "../../apiServices/communityApiService.ts";
+import MemberApiService from "../../apiServices/memberApiService.ts";
 
 
 
 
 /** REDUX Slice */
 const actionDispatch = (dispatch: Dispatch) => ({
-  setChosenMember: (data: Member[]) => dispatch( setChosenMember(data)),
+  setChosenMember: (data: Member) => dispatch( setChosenMember(data)),
   setChosenMemberBoArticles: (data: BoArticle[]) => dispatch(  setChosenMemberBoArticles(data)),
   setChosenSingleBoArticle: (data: BoArticle) => dispatch( setChosenSingleBoArticle(data)),
 
@@ -69,7 +72,7 @@ const chosenSingleBoArticleRetriever = createSelector (
 export function VisitMyPage(props: any) {
       
   /**INITIALIZATIONS */
-
+  const {verifiedMemberData } = props;
   const {setChosenMember, 
     setChosenMemberBoArticles,
     setChosenSingleBoArticle,
@@ -77,17 +80,59 @@ export function VisitMyPage(props: any) {
   const {chosenMember} = useSelector(chosenMemberRetriever);
   const {chosenMemberBoArticles} = useSelector(chosenMemberBoArticlesRetriever);
   const {chosenSingleBoArticle} = useSelector( chosenSingleBoArticleRetriever);
+  const [value, setValue] = useState("1");
+  const [ articlesRebuild, setArticlesRebuild] = useState<Date>(new Date());
+  const [ followRebuild, setFollowRebuild] = useState<boolean>(false);
+  const [memberArticleSearchObj, setMemberArticlesSearchObj] =
+  useState<SearchMemeberArticlesObj>({mb_id: "none", page: 1, limit: 5});
+
+  useEffect(() => {
+    if(!localStorage.getItem("member_data")) {
+      sweetFailureProvider("please Login first", true, true);
+    }
+
+    const communityService = new CommunityApiService();
+    const memberService = new MemberApiService();
+
+    communityService
+    .getMemberCommunityArticles(memberArticleSearchObj)
+    .then((data) => setChosenMemberBoArticles(data))
+    .catch((err) => console.log(err));
+
+    memberService
+    .getChosenMember(verifiedMemberData?._id)
+    .then((data) => setChosenMember(data))
+    .catch((err) => console.log(err));
+
+  },[memberArticleSearchObj, articlesRebuild, followRebuild])
 
 
-  const [value, setValue] = React.useState("1");
+ 
           
            
           
   /**  HANDLERS */
-   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
-     setValue(newValue);
-            
+   const handleChange = (event: any, newValue: string) => {
+     setValue(newValue);     
 };     
+const handlePaginationChange = (event: any, value: number) => {
+   memberArticleSearchObj.page = value;
+   setMemberArticlesSearchObj({...memberArticleSearchObj});     
+};  
+const renderChosenArticleHandler = async (art_id: string) => {
+  try{
+    const communityService = new CommunityApiService();
+    communityService
+    .getChosenArticle(art_id)
+    .then((data) => { setChosenSingleBoArticle(data);
+    setValue("5");
+  })
+    .catch((err) => console.log(err));
+  }catch(err: any) {
+    console.log(err);
+    sweetErrorHandling(err).then();
+  }
+}
       
    return ( 
        <div className="my_page">
@@ -99,7 +144,11 @@ export function VisitMyPage(props: any) {
                      <TabPanel value={"1"}>
                         <Box className="menu_name">Mening Maqolalarim</Box>
                         <Box className="menu_content">
-                          <MemberPosts/>
+                          <MemberPosts 
+                          chosenMemberBoArticles={chosenMemberBoArticles}
+                          renderChosenArticleHandler={renderChosenArticleHandler}
+                          setArticlesRebuild={ setArticlesRebuild}
+                          />
                           <Stack 
                            sx={{my: "40px"}}
                            direction={"row"}
@@ -108,8 +157,8 @@ export function VisitMyPage(props: any) {
                           >
                            <Box className="bottom_box">
                              <Pagination
-                              count={3}
-                              page={1}
+                              count={memberArticleSearchObj.page  >= 3 ? memberArticleSearchObj.page + 1 :3}
+                              page={memberArticleSearchObj.page}
                               renderItem={(item) => (
                                <PaginationItem 
                                  components={{
@@ -120,6 +169,7 @@ export function VisitMyPage(props: any) {
                                  color={"secondary"}
                                />
                             )}
+                            onChange={handlePaginationChange}
                              />
                            </Box>
                           </Stack>
@@ -128,13 +178,21 @@ export function VisitMyPage(props: any) {
                      <TabPanel value={"2"}>
                        <Box className={"menu_name"}>Followers</Box>
                        <Box className={"menu_content"}>
-                         <MemberFollowers actions_enabled={true} />
+                         <MemberFollowers actions_enabled={true}
+                         setFollowRebuild={setFollowRebuild}
+                         followRebuild={followRebuild}
+                         mb_id={props.verifiedMemberData?._id} 
+                         />
                        </Box>
                      </TabPanel>
                      <TabPanel value={"3"}>
                        <Box className={"menu_name"}>Following</Box>
                        <Box className={"menu_content"}>
-                         <MemberFollowing actions_enabled={true} />
+                         <MemberFollowing actions_enabled={true} 
+                           setFollowRebuild={setFollowRebuild}
+                           followRebuild={followRebuild}
+                          mb_id={props.verifiedMemberData?._id}
+                          />
                        </Box>
                      </TabPanel>
                      <TabPanel value={"4"}>
@@ -146,7 +204,7 @@ export function VisitMyPage(props: any) {
                      <TabPanel value={"5"}>
                        <Box className={"menu_name"}> Tanlangan Maqola </Box>
                        <Box className={"menu_content"}>
-                        <TViewer text={`<h3>hello boss</h3>`}/>
+                        <TViewer chosenSingleBoArticle={chosenSingleBoArticle} />
                        </Box>
                      </TabPanel>
                      <TabPanel value={"6"}>
@@ -175,8 +233,8 @@ export function VisitMyPage(props: any) {
                           />
                           
                         </div>
-                         <span className="order_user_name">Zarina Nizommidinova</span>
-                         <span className="order_user_prof">USER</span>
+                         <span className="order_user_name">{chosenMember?.mb_nick}</span>
+                         <span className="order_user_prof">{chosenMember?.mb_type}</span>
                         </Box>
                         <Box className="user_media_box">
                           <FacebookIcon />
@@ -189,9 +247,13 @@ export function VisitMyPage(props: any) {
                                          flexDirection: "row",
                                      }}
                                 >
-                                    <p className={"follows"}>Followers: 3 Following: 2</p>
+                                    <p className={"follows"}>
+                                      Followers: {chosenMember?.mb_subscriber_cnt}
+                                       Following: {chosenMember?.mb_follow_cnt}</p>
                             </Box>
-                        <p className="user_desc">"qo'shimcha malumot kiritilmagan</p>
+                        <p className="user_desc">
+                          {chosenMember?.mb_description ??
+                         "qo'shimcha malumot kiritilmagan"}</p>
                         <Box 
                          display={"flex"}
                          justifyContent={"flex-end"}
@@ -223,7 +285,7 @@ export function VisitMyPage(props: any) {
                          aria-label="lab API tabs example"
                        >
                         <Tab 
-                        style={{ flexDirection: "column"}}
+                        style={{ flexDirection: "column", cursor: "pointer"}}
                         value={4}
                         component={() =>(
                           <div
@@ -231,7 +293,7 @@ export function VisitMyPage(props: any) {
                           onClick={() => setValue("1")}  
                         >
                            <img src="/icons/Pencil.svg" alt="" />
-                           <span>Maqolalarim</span>
+                           <span  style={{ cursor: "pointer"}}>Maqolalarim</span>
                             </div>
                            )}
                         />
@@ -244,7 +306,7 @@ export function VisitMyPage(props: any) {
                           onClick={() => setValue("2")}  
                         >
                            <img src="/icons/Group.svg" alt="" />
-                           <span>Follower</span>
+                           <span  style={{ cursor: "pointer"}}>Follower</span>
                             </div>
                         )}
                         />
@@ -257,7 +319,7 @@ export function VisitMyPage(props: any) {
                           onClick={() => setValue("3")}  
                         >
                            <img src="/icons/User.svg" alt="" />
-                           <span>Following</span>
+                           <span  style={{ cursor: "pointer"}}>Following</span>
                             </div>
                           )}
                         />
