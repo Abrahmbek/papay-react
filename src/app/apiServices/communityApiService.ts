@@ -13,7 +13,8 @@ class CommunityApiService {
 
       public async getTargetArticles ( data: SearchArticlesObj) {
             try{
-                  let url = `/community/target?bo_id=${data.bo_id}&page=${data.page}1&limit=${data.limit}`;
+                
+                  let url = `/community/target?bo_id=${data.bo_id}&page=${data.page}&limit=${data.limit}`;
                   if(data.order) url += `&order=${data.order}`;
           
                   const result = await axios.get(this.path + url, {withCredentials: true});

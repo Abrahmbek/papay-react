@@ -70,7 +70,7 @@ export function CommunityPage(props: any) {
 
       const handleChange =(event: any, newValue: string) => {
 
-        searchArticlesObj.page =1;
+        searchArticlesObj.page = 1;
         switch (newValue) {
           case "1":
             searchArticlesObj.bo_id = "all";

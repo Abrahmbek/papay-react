@@ -23,7 +23,7 @@ import { Definer } from "../../../lib/Definer.ts";
 
 /** REDUX Slice */
 const actionDispatch = (dispatch: Dispatch) => ({
-  setMemberFollowers: (data: Follower) => dispatch(  setMemberFollowers(data)),
+  setMemberFollowers: (data: Follower[]) => dispatch(  setMemberFollowers(data)),
 
  
 });
