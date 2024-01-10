@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Link,  Stack } from "@mui/material";
+import { Box, Checkbox, Link,  Stack } from "@mui/material";
 import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
 import Favorite from "@mui/icons-material/Favorite";
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
@@ -11,15 +11,16 @@ import  assert  from "assert";
 import { Definer } from '../../../lib/Definer.ts';
 import MemberApiService from '../../apiServices/memberApiService.ts';
 import { sweetErrorHandling, sweetTopSmallSuccessAlert } from '../../../lib/sweetAlert.ts';
+import { verifiedMemberData } from '../../apiServices/verify.ts';
 
 
 export function TargetArticles(props: any) {
-
+  const { setArticlesRebuild}  = props;
     /**HANDLERS */
-    const targetLikenHandler = async (e: any) => {
-      const { setArticlesRebuild}  = props;
+    const targetLikeHandler = async (e: any) => {
+    
       try{
-       assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
+       assert.ok(verifiedMemberData, Definer.auth_err1);
 
        const memberService = new MemberApiService();
        const like_result = await memberService.memberLikeTarget({
@@ -75,20 +76,17 @@ export function TargetArticles(props: any) {
                 >
                   <Box className="article_share_main">
                     <span > {moment().format("YY-MM-DD HH:mm" )}</span>
-                    <CheckBox
-               
-                    icon={ <FavoriteBorder />}
-                    checkedIcon={<Favorite style={{ color: "red"}}/>}
-                    id={article?._id}
-                    onClick={targetLikenHandler}
-                    checked={article?.me_liked && article.me_liked[0]?.my_favorite
-                      ? true
-                      : false
-                      }
-                     /*@ts-ignore */
-                      style={{ml: "40px"}}
+                    <Checkbox 
+                   sx={{ml: "40px"}}
+                   icon={<FavoriteBorder />}
+                   id={article?._id}
+                   checkedIcon={<Favorite style={{color: "red"}}/>}
+                   checked={article?.me_liked && article.me_liked[0]?.my_favorite ? true : false}
+
+                   onClick={targetLikeHandler}
+                   />  
                   
-                    />
+                  
                    
                     <span style={{ marginRight: "18px" }}>{article?.art_likes}</span>
                     <RemoveRedEyeIcon />

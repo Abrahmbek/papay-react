@@ -148,7 +148,7 @@
   /*my_page_right*/
   
   .my_page {
-    width: 100%;
+    width: auto;
     height: auto;
     display: flex;
     position: relative;
@@ -158,7 +158,7 @@
     margin-left: 57px;
     position: relative;
     width: 372.58px;
-    height: 408px;
+    height: 498px;
     border-radius: 16px;
     display: flex;
     background: #FFF;
@@ -272,8 +272,10 @@
       line-height: normal;
     }
     
-    .my_page_menu {
+    .my_page .my_page_menu {
       margin-top: 40px;
+      width: 100%;
+      height: auto;
       align-items: center;
       flex-direction: column;
       display: flex;

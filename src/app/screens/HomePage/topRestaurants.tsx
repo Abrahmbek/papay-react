@@ -22,6 +22,7 @@ import {Definer} from "../../../lib/Definer.ts";
 import {sweetErrorHandling, sweetTopSmallSuccessAlert} from "../../../lib/sweetAlert.ts"
 import MemberApiService from '../../apiServices/memberApiService.ts';
 import { useHistory } from 'react-router-dom';
+import { verifiedMemberData } from '../../apiServices/verify.ts';
 
 
 /** REDUX SELECTOR */
@@ -47,7 +48,7 @@ export function TopRestaurants() {
 
   const targetLikeTop= async (e: any, id: string) => {
    try{ 
-    assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
+    assert.ok(verifiedMemberData, Definer.auth_err1);
 
     const memberService = new MemberApiService(), 
     like_result: any = await memberService.memberLikeTarget({

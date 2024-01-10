@@ -11,6 +11,7 @@ import MemberApiService from "../../apiServices/memberApiService.ts";
 import { Definer } from "../../../lib/Definer.ts";
 import assert from "assert";
 import { sweetErrorHandling, sweetTopSmallSuccessAlert } from "../../../lib/sweetAlert.ts";
+import { verifiedMemberData } from "../../apiServices/verify.ts";
 
 
 export function MemberPosts(props: any ) {
@@ -20,11 +21,11 @@ export function MemberPosts(props: any ) {
     setArticlesRebuild,} = props;
 
        /**HANDLERS */
-       const targetLikenHandler = async (e: any) => {
+       const targetLikeHandler = async (e: any) => {
         const { setArticlesRebuild}  = props;
         try{
           e.stopPropagation();
-         assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
+         assert.ok(verifiedMemberData, Definer.auth_err1);
   
          const memberService = new MemberApiService();
          const like_result = await memberService.memberLikeTarget({
@@ -103,7 +104,7 @@ export function MemberPosts(props: any ) {
                    checkedIcon={<Favorite style={{color: "red"}}/>}
                    checked={article?.me_liked && article.me_liked[0]?.my_favorite ? true : false}
 
-                   onClick={targetLikenHandler}
+                   onClick={targetLikeHandler}
                    />  
                    <span style={{marginRight: "18px"}}>{article?.art_likes}</span>
 

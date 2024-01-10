@@ -13,6 +13,7 @@ import { serverApi } from "../../../lib/config.ts";
 import { Product } from "../../../types/product.ts";
 import { sweetErrorHandling, sweetFailureProvider } from "../../../lib/sweetAlert.ts";
 import OrderApiService from "../../apiServices/orderApiService.ts";
+import { verifiedMemberData } from "../../apiServices/verify.ts";
 
    /** REDUX SELECTOR */
 const pausedOrdersRetriever = createSelector (
@@ -34,7 +35,7 @@ export default function PausedOrders(props: any) {
   const order_id = event.target.value;
   const data = {order_id: order_id, order_status: "DELETED"};
 
-  if(!localStorage.getItem("member_data")) {
+  if(!verifiedMemberData) {
     sweetFailureProvider("Please Login first", true);
   }
   let confirmation = window.confirm("Buyurtmani bekor qilishni hohlaysizmi?");
@@ -53,7 +54,7 @@ export default function PausedOrders(props: any) {
  const order_id = event.target.value;
  const data = {order_id: order_id, order_status: "PROCESS"};
 
- if(!localStorage.getItem("member_data")) {
+ if(!verifiedMemberData) {
    sweetFailureProvider("Please Login first", true);
  }
  let confirmation = window.confirm("Buyurtmani tolashni tasdiqlaysizmi?");

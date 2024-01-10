@@ -29,3 +29,10 @@ export interface SearchMemeberArticlesObj {
       limit: number;
       mb_id: string;
 }
+
+export interface BoArticleInput {
+      art_subject: string;
+      art_content: string;
+      art_image: string;
+      bo_id: string;
+}

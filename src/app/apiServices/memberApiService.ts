@@ -91,6 +91,7 @@ class MemberApiService {
             
             console.log("state:", result.data.state);
             const member: Member = result.data.data;
+            console.log("kelyaptimi.....");
             return member;
             }catch(err: any) {
                   console.log(`ERORR::: memberLikeTarget${err.message}`);

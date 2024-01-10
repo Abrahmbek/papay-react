@@ -34,8 +34,7 @@ import { Product } from '../types/product.ts';
 function App() {
 
   /**INITIALIZATIONS */
-  const [verifiedMemberData, setVerifiedMemberData] = useState<Member | null>(null);
-
+  
   const [path, SetPath] = useState();
   const manin_path = window.location.pathname;
   const [signUpOpen, setSignUpOpen] = useState(false);
@@ -49,20 +48,7 @@ function App() {
   const current_cart:  CartItem[] = JSON.parse(cartJson) ?? [];
   const [cartItems, setCartItems] = useState<CartItem[]>(current_cart);
 
-  useEffect(() =>{
-  console.log("==== useEfeect: App ===");
-  const memberDataJson: any = localStorage.getItem("member_data")
-  ? localStorage.getItem("member_data")
-  : null;
-  const member_data = memberDataJson ? JSON.parse(memberDataJson) : null;
-  if(member_data) {
-    member_data.mb_image = member_data.mb_image 
-    ? `${serverApi}/${member_data.mb_image}`
-    :"/public/auth/default_user1.svg";
-    setVerifiedMemberData(member_data);
-  }
-  },[signUpOpen, loginOpen]);
-
+  
   /**HANDLERS */
   const handleSignUpOpen = () =>  setSignUpOpen(true);
   
@@ -162,7 +148,7 @@ const onDeleteAll = () => {
       handleLogOutClick={handleLogOutClick}
       handleCloseLogOut={handleCloseLogOut}
       handleLogoutRequest={handleLogoutRequest}
-      verifiedMemberData={verifiedMemberData}
+    
       cartItems={cartItems}
       onAdd={onAdd}
       onRemove={ onRemove}
@@ -180,7 +166,7 @@ const onDeleteAll = () => {
       handleLogOutClick={handleLogOutClick}
       handleCloseLogOut={handleCloseLogOut}
       handleLogoutRequest={handleLogoutRequest}
-      verifiedMemberData={verifiedMemberData}
+     
       cartItems={cartItems}
       onAdd={onAdd}
       onRemove={ onRemove}
@@ -198,7 +184,7 @@ const onDeleteAll = () => {
       handleLogOutClick={handleLogOutClick}
       handleCloseLogOut={handleCloseLogOut}
       handleLogoutRequest={handleLogoutRequest}
-       verifiedMemberData={verifiedMemberData}
+     
        cartItems={cartItems}
        onAdd={onAdd}
        onRemove={ onRemove}
@@ -219,10 +205,10 @@ const onDeleteAll = () => {
         </Route>
         <Route path="/orders">
           <OrdersPage orderRebuild={orderRebuild} setOrderRebuild={setOrderRebuild}
-          verifiedMemberData={verifiedMemberData}/>
+         />
         </Route>
         <Route path="/member-page">
-          <MembersPage verifiedMemberData={verifiedMemberData}/>
+          <MembersPage />
         </Route>
         <Route path="/help">
           <HelpPage />

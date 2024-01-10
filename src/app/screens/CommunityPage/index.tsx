@@ -148,7 +148,7 @@ export function CommunityPage(props: any) {
 
                 <Box className={"article_bott"}>
                   <Pagination 
-                  count={3}
+                  count={5}
                   page={1}
                   renderItem={(item) => (
                     <PaginationItem 

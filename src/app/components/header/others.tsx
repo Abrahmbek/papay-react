@@ -13,6 +13,7 @@ import React from 'react';
 
 import { NavLink } from 'react-router-dom';
 import Basket from './basket.tsx';
+import { verifiedMemberData } from '../../apiServices/verify.ts';
 
 export function  NavbarOthers(props: any) {
     return ( <div className='format_others home_navbar'>
@@ -39,7 +40,7 @@ export function  NavbarOthers(props: any) {
                             Oshhona
                         </NavLink>
                   </Box>
-                  {props.verifiedMemberData ? (
+                  {verifiedMemberData ? (
                      <Box className="hover_line" onClick={props.SetPath}>
                      <NavLink to="/orders" activeClassName="underline">
                           Buyrtma
@@ -52,7 +53,7 @@ export function  NavbarOthers(props: any) {
                          Jamiyat
                         </NavLink>
                   </Box>
-                  {props.verifiedMemberData ? (
+                  {verifiedMemberData ? (
                    <Box className="hover_line" onClick={props.SetPath}>
                    <NavLink to="/member-page" activeClassName="underline">
                     Sahifam
@@ -76,7 +77,7 @@ export function  NavbarOthers(props: any) {
                  
                  />
 
-                  {!props.verifiedMemberData ?  (
+                  {!verifiedMemberData ?  (
                         <Box>
                         <Button variant='contained' 
                         style={{color: "#FFFFFF", background: "#1976d2"}}
@@ -88,7 +89,7 @@ export function  NavbarOthers(props: any) {
                      ) : (
                         <img
                         style={{width: "48px", height: "48px", borderRadius: "24px"}}
-                        src={props.verifiedMemberData.mb_image} alt=''
+                        src={verifiedMemberData.mb_image} alt=''
                         onClick={props.handleLogOutClick}
                         />
                      )}

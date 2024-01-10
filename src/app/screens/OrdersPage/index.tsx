@@ -20,6 +20,7 @@ import {setPausedOrders, setProcessOrders, setFinishedOrders} from "../../screen
 import { Order } from "../../../types/order.ts";
 import OrderApiService from "../../apiServices/orderApiService.ts";
 import { Member } from "../../../types/user.ts";
+import { verifiedMemberData } from "../../apiServices/verify.ts";
 
 
 /** REDUX Slice */
@@ -37,7 +38,7 @@ export function OrdersPage(props: any) {
   const {setPausedOrders, setProcessOrders, setFinishedOrders} = 
   actionDispatch(useDispatch());
 
-  const verifiedMemberData: Member | null = props.verifiedMemberData;
+  
 
  useEffect(() => {
   const orderService = new OrderApiService();

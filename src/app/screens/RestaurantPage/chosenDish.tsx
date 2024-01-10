@@ -32,13 +32,14 @@ import RestaurantApiService from '../../apiServices/restaurantApiService.ts';
 import { serverApi } from '../../../lib/config.ts';
 import MemberApiService from '../../apiServices/memberApiService.ts';
 import { sweetErrorHandling, sweetTopSmallSuccessAlert } from '../../../lib/sweetAlert.ts';
+import { verifiedMemberData } from '../../apiServices/verify.ts';
 
 
 
 /** REDUX Slice */
 const actionDispatch = (dispatch: Dispatch) => ({
 
-  setChosenRestaurant: (data: Restaurant) => dispatch(setChosenRestaurant(data)),
+  setChosenRestaurant: (data: Restaurant[]) => dispatch(setChosenRestaurant(data)),
   setChosenProduct: (data: Product) => dispatch(setChosenProduct(data)),
  
 });
@@ -92,7 +93,7 @@ export function ChoosenDish(props: any) {
 
   const targetLikeProduct = async (e: any) => {
     try{ 
-     assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
+     assert.ok(verifiedMemberData, Definer.auth_err1);
  
      const memberService = new MemberApiService(), 
      like_result: any = await memberService.memberLikeTarget({

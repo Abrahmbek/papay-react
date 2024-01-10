@@ -38,6 +38,7 @@ import MemberApiService from "../../apiServices/memberApiService.ts";
 import CommunityApiService from "../../apiServices/communityApiService.ts";
 import { sweetErrorHandling, sweetTopSmallSuccessAlert } from "../../../lib/sweetAlert.ts";
 import FollowApiService from "../../apiServices/followApiService.ts";
+import { verifiedMemberData } from "../../apiServices/verify.ts";
 
 
 
@@ -77,7 +78,7 @@ export function VisitOtherPage(props: any) {
   /**INITIALIZATIONS */
 
   const history = useHistory();
-const {verifiedMemberData, chosen_mb_id, chosen_art_id} = props;
+const {chosen_mb_id, chosen_art_id} = props;
   const {setChosenMember, 
     setChosenMemberBoArticles,
     setChosenSingleBoArticle,
@@ -88,7 +89,7 @@ const {verifiedMemberData, chosen_mb_id, chosen_art_id} = props;
 
   const [value, setValue] = React.useState("1");
   const [memberArticleSearchObj, setMemberArticlesSearchObj] =
-  useState<SearchMemeberArticlesObj>({mb_id: chosen_mb_id, page: 1, limit: 5});
+  useState<SearchMemeberArticlesObj>({mb_id: chosen_mb_id, page: 1, limit: 4});
   const [ articlesRebuild, setArticlesRebuild] = useState<Date>(new Date());
   const [ followRebuild, setFollowRebuild] = useState<boolean>(false);
 
@@ -148,7 +149,7 @@ const renderChosenArticleHandler = async (art_id: string) => {
 const subscribeHandler =async (e: any) => {
   try{
 
-   assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
+   assert.ok(verifiedMemberData, Definer.auth_err1);
 
    const followService = new FollowApiService();
    await followService.subscribe(e.target.value);
@@ -165,7 +166,7 @@ const subscribeHandler =async (e: any) => {
 const unsubscribeHandler =async (e: any) => {
   try{
 
-   assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
+   assert.ok(verifiedMemberData, Definer.auth_err1);
 
    const followService = new FollowApiService();
    await followService.unsubscribe(e.target.value);
@@ -341,7 +342,7 @@ const handlePaginationChange = (event: any, value: number) => {
                         value={"1"}
                         component={(e) =>(
                           <div
-                        className={`menu_box ${e}`}
+                        className={`menu_box`}
                           onClick={() => setValue("1")}  
                         >
                            <img src="/icons/Pencil.svg" alt="" />
@@ -354,7 +355,7 @@ const handlePaginationChange = (event: any, value: number) => {
                         value={"2"}
                         component={() =>(
                           <div
-                        className={`menu_box ${value}`}
+                        className={`menu_box`}
                           onClick={() => setValue("2")}  
                         >
                            <img src="/icons/Group.svg" alt="" />
@@ -367,7 +368,7 @@ const handlePaginationChange = (event: any, value: number) => {
                         value={"3"}
                         component={() =>(
                           <div
-                        className={`menu_box ${value}`}
+                        className={`menu_box`}
                           onClick={() => setValue("3")}  
                         >
                            <img src="/icons/User.svg" alt="" />

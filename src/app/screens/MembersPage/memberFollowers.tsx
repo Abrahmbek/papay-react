@@ -17,6 +17,8 @@ import { serverApi } from "../../../lib/config.ts";
 import { sweetErrorHandling, sweetTopSmallSuccessAlert } from "../../../lib/sweetAlert.ts";
 import assert from "assert";
 import { Definer } from "../../../lib/Definer.ts";
+import { useHistory } from "react-router-dom";
+import { verifiedMemberData } from "../../apiServices/verify.ts";
 
 
 
@@ -38,6 +40,7 @@ const memberFollowersRetriever = createSelector (
 export function MemberFollowers(props: any) {
 
      /**INITIALIZATION */
+     const history = useHistory();
     const { followRebuild, setFollowRebuild, mb_id} = props;
      const { setMemberFollowers} = actionDispatch(useDispatch());
      const {memberFollowers} = useSelector(memberFollowersRetriever);
@@ -64,7 +67,7 @@ export function MemberFollowers(props: any) {
    const subscribeHandler =async (e: any, id: string) => {
     try{
      e.stopPropagation();
-     assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
+     assert.ok(verifiedMemberData, Definer.auth_err1);
 
      const followService = new FollowApiService();
      await followService.subscribe(id);
@@ -76,6 +79,11 @@ export function MemberFollowers(props: any) {
       sweetErrorHandling(err).then();
     }
    }
+
+   const visitMemberHandler = (mb_id: string) => {
+    history.push(`/member-page/other?mb_id=${mb_id}`);
+    document.location.reload();
+   }
      return (
        
         <Stack>
@@ -85,7 +93,11 @@ export function MemberFollowers(props: any) {
             : "/icons/odamcha.svg";
             return (
                <Box className="follow_box">
-                 <Avatar alt="" src={image_url} sx={{ width: 89, height: 89}} />
+                 <Avatar
+                 style={{cursor: "pointer"}}
+                 alt="" src={image_url} sx={{ width: 89, height: 89}} 
+                 onClick={() => visitMemberHandler(follower?.subscriber_id)}
+                 />
                  <div
                   style={{
                     width: "400px",
@@ -95,8 +107,15 @@ export function MemberFollowers(props: any) {
                     height: "85%",
                   }}
                  >
-                  <span className="username_text">{follower?.subscriber_member_data?.mb_type}</span>
-                  <span className="name_text">{follower?.subscriber_member_data?.mb_nick}</span>
+                  <span className="username_text"
+                
+                  >
+                    {follower?.subscriber_member_data?.mb_type}
+                  </span>
+                  <span className="name_text"
+                     style={{cursor: "pointer"}}
+                     onClick={() => visitMemberHandler(follower?.subscriber_id)}
+                  >{follower?.subscriber_member_data?.mb_nick}</span>
                  </div>
                 <Stack className="btn_follow">
                  {props.actions_enabled &&
@@ -104,6 +123,7 @@ export function MemberFollowers(props: any) {
                   <Button
                   className="following-already"
                   style={{
+                    
                     background: "#68C5CB",
                         color: "#ffffff",
                           borderRadius: "50px",

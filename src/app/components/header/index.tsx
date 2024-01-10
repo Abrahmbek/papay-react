@@ -6,6 +6,7 @@ import { Logout } from '@mui/icons-material';
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import Basket from './basket.tsx';
+import { verifiedMemberData } from '../../apiServices/verify.ts';
 
 export function  NavbarHome(props: any) {
     
@@ -34,7 +35,7 @@ export function  NavbarHome(props: any) {
                             Oshhona
                         </NavLink>
                   </Box>
-                  {props.verifiedMemberData ? (
+                  {verifiedMemberData ? (
                      <Box className="hover_line" onClick={props.SetPath}>
                      <NavLink to="/orders" activeClassName="underline">
                           Buyrtma
@@ -48,7 +49,7 @@ export function  NavbarHome(props: any) {
                            Jamiyat
                         </NavLink>
                   </Box>
-                  {props.verifiedMemberData ? (
+                  {verifiedMemberData ? (
                    <Box className="hover_line" onClick={props.SetPath}>
                    <NavLink to="/member-page" activeClassName="underline">
                     Sahifam
@@ -72,7 +73,7 @@ export function  NavbarHome(props: any) {
                  
                  />
 
-                  {!props.verifiedMemberData ?  (
+                  {!verifiedMemberData ?  (
                         <Box>
                         <Button variant='contained' 
                         style={{color: "#FFFFFF", background: "#1976d2"}}
@@ -84,7 +85,7 @@ export function  NavbarHome(props: any) {
                      ) : (
                         <img
                         style={{width: "48px", height: "48px", borderRadius: "24px"}}
-                        src={props.verifiedMemberData.mb_image} alt=''
+                        src={verifiedMemberData.mb_image} alt=''
                         onClick={props.handleLogOutClick}
                         />
                      )}
@@ -151,7 +152,7 @@ export function  NavbarHome(props: any) {
                 24 soat xizmatingizdamiz.
                 </Box>
                 <Box sx={{mt:'90px'}}>
-                  {!props.verifiedMemberData ? (
+                  {!verifiedMemberData ? (
 
                   <Button variant='contained' 
                   style={{

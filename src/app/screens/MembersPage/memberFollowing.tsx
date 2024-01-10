@@ -17,6 +17,8 @@ import {  FollowSearchObj, Following } from "../../../types/follow.ts";
 import FollowApiService from "../../apiServices/followApiService.ts";
 import { sweetErrorHandling, sweetTopSmallSuccessAlert } from "../../../lib/sweetAlert.ts";
 import { serverApi } from "../../../lib/config.ts";
+import { useHistory } from "react-router-dom";
+import { verifiedMemberData } from "../../apiServices/verify.ts";
 
 
 
@@ -56,7 +58,7 @@ export function MemberFollowing(props: any) {
 
 
          /**HANDLERS */
-
+         const history = useHistory();
      const handlePaginationChange = (event: any, value: number) => {
       followingsSearchObj.page = value;
       setFollowingsSearchObj({...followingsSearchObj});     
@@ -65,7 +67,7 @@ export function MemberFollowing(props: any) {
     const unsubscribeHandler =async (e: any, id: string) => {
      try{
       e.stopPropagation();
-      assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
+      assert.ok(verifiedMemberData, Definer.auth_err1);
  
       const followService = new FollowApiService();
       await followService.unsubscribe(id);
@@ -77,7 +79,10 @@ export function MemberFollowing(props: any) {
        sweetErrorHandling(err).then();
      }
     }
-
+    const visitMemberHandler = (mb_id: string) => {
+      history.push(`/member-page/other?mb_id=${mb_id}`);
+      document.location.reload();
+     }
       return (
         <Stack>
           {memeberFollowings.map((following: Following) =>{
@@ -86,7 +91,10 @@ export function MemberFollowing(props: any) {
             : "/icons/odamcha.svg";
             return (
                <Box className="follow_box">
-                 <Avatar alt="" src={image_url} sx={{ width: 89, height: 89}} />
+                 <Avatar alt="" src={image_url} sx={{ width: 89, height: 89}}
+                  style={{cursor: "pointer"}}
+                  onClick={() => visitMemberHandler(following?.follow_id)}
+                 />
                  <div
                   style={{
                     width: "400px",
@@ -97,7 +105,11 @@ export function MemberFollowing(props: any) {
                   }}
                  >
                   <span className="username_text">{following?.follow_member_data?.mb_type}</span>
-                  <span className="name_text">{following?.follow_member_data?.mb_nick}</span>
+                  <span className="name_text"
+                   style={{cursor: "pointer"}}
+                   onClick={() => visitMemberHandler(following?.follow_id)}
+                  >
+                    {following?.follow_member_data?.mb_nick}</span>
                  </div>
                  {props.actions_enabled && (
                   

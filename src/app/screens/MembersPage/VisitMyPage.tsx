@@ -37,6 +37,7 @@ import { BoArticle, SearchMemeberArticlesObj } from "../../../types/boArticle.ts
 import { sweetErrorHandling, sweetFailureProvider } from "../../../lib/sweetAlert.ts";
 import CommunityApiService from "../../apiServices/communityApiService.ts";
 import MemberApiService from "../../apiServices/memberApiService.ts";
+import { verifiedMemberData } from "../../apiServices/verify.ts";
 
 
 
@@ -72,7 +73,7 @@ const chosenSingleBoArticleRetriever = createSelector (
 export function VisitMyPage(props: any) {
       
   /**INITIALIZATIONS */
-  const {verifiedMemberData } = props;
+
   const {setChosenMember, 
     setChosenMemberBoArticles,
     setChosenSingleBoArticle,
@@ -84,10 +85,10 @@ export function VisitMyPage(props: any) {
   const [ articlesRebuild, setArticlesRebuild] = useState<Date>(new Date());
   const [ followRebuild, setFollowRebuild] = useState<boolean>(false);
   const [memberArticleSearchObj, setMemberArticlesSearchObj] =
-  useState<SearchMemeberArticlesObj>({mb_id: "none", page: 1, limit: 5});
+  useState<SearchMemeberArticlesObj>({mb_id: "none", page: 1, limit: 4});
 
   useEffect(() => {
-    if(!localStorage.getItem("member_data")) {
+    if(!verifiedMemberData) {
       sweetFailureProvider("please Login first", true, true);
     }
 
@@ -133,7 +134,7 @@ const renderChosenArticleHandler = async (art_id: string) => {
     sweetErrorHandling(err).then();
   }
 }
-      
+      console.log("chosen member", chosenMember);
    return ( 
        <div className="my_page">
           <Container maxWidth="lg" sx={{mt: "50px", mb: "50px"}}>
@@ -181,7 +182,7 @@ const renderChosenArticleHandler = async (art_id: string) => {
                          <MemberFollowers actions_enabled={true}
                          setFollowRebuild={setFollowRebuild}
                          followRebuild={followRebuild}
-                         mb_id={props.verifiedMemberData?._id} 
+                         mb_id={verifiedMemberData?._id} 
                          />
                        </Box>
                      </TabPanel>
@@ -191,14 +192,16 @@ const renderChosenArticleHandler = async (art_id: string) => {
                          <MemberFollowing actions_enabled={true} 
                            setFollowRebuild={setFollowRebuild}
                            followRebuild={followRebuild}
-                          mb_id={props.verifiedMemberData?._id}
+                          mb_id={verifiedMemberData?._id}
                           />
                        </Box>
                      </TabPanel>
                      <TabPanel value={"4"}>
                        <Box className={"menu_name"} >Maqola yozish</Box>
                        <Box className={"write_content"}>
-                        <TuiEditor />
+                        <TuiEditor setValue={setValue} 
+                        setArticlesRebuild={setArticlesRebuild}
+                        />
                        </Box>
                      </TabPanel>
                      <TabPanel value={"5"}>
@@ -260,8 +263,11 @@ const renderChosenArticleHandler = async (art_id: string) => {
                          sx={{ mt: "10px"}}
                         >
                         <TabList
+                        orientation="vertical"
+                        variant="scrollable"
+                        sx={{borderRight: 1, borderColor: "divider", width: "95%"}}
                          onChange={handleChange}
-                         aria-label="lab API tabs example"
+                         aria-label="Vertical tabs example"
                          >
                          <Tab 
                           style={{ flexDirection: "column"}}
@@ -289,7 +295,7 @@ const renderChosenArticleHandler = async (art_id: string) => {
                         value={4}
                         component={() =>(
                           <div
-                        className={`menu_box ${value}`}
+                        className={`menu_box`}
                           onClick={() => setValue("1")}  
                         >
                            <img src="/icons/Pencil.svg" alt="" />
@@ -302,7 +308,7 @@ const renderChosenArticleHandler = async (art_id: string) => {
                         value={4}
                         component={() =>(
                           <div
-                        className={`menu_box ${value}`}
+                        className={`menu_box`}
                           onClick={() => setValue("2")}  
                         >
                            <img src="/icons/Group.svg" alt="" />
@@ -315,7 +321,7 @@ const renderChosenArticleHandler = async (art_id: string) => {
                         value={4}
                         component={() =>(
                           <div
-                        className={`menu_box ${value}`}
+                        className={`menu_box`}
                           onClick={() => setValue("3")}  
                         >
                            <img src="/icons/User.svg" alt="" />

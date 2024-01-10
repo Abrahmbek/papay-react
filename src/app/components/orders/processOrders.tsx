@@ -13,6 +13,7 @@ import { Product } from "../../../types/product.ts";
 import { serverApi } from "../../../lib/config.ts";
 import { sweetErrorHandling, sweetFailureProvider } from "../../../lib/sweetAlert.ts";
 import OrderApiService from "../../apiServices/orderApiService.ts";
+import { verifiedMemberData } from "../../apiServices/verify.ts";
 
    /** REDUX SELECTOR */
 const processOrdersRetriever = createSelector (
@@ -33,7 +34,7 @@ export default function ProcessOrders(props: any) {
  const order_id = event.target.value;
  const data = {order_id: order_id, order_status: "DELETED"};
 
- if(!localStorage.getItem("member_data")) {
+ if(!verifiedMemberData) {
    sweetFailureProvider("Please Login first", true);
  }
  let confirmation = window.confirm("Buyurtmani olganingizni tasdqilaysizmi?");
