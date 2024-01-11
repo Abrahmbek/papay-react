@@ -43,7 +43,7 @@ export function MemberPosts(props: any ) {
       return (
         <Box className={"post_content"}>
           {chosenMemberBoArticles.map((article: BoArticle) => {
-            const image_path = article.art_image ? `${serverApi}/${article.art_image}`
+            const image_path = article?.art_image ? `${serverApi}/${article?.art_image}`
             : "/icons/odamcha.svg";
             return (
               <Stack className="all_article_box" sx={{cursor: "pointer"}}

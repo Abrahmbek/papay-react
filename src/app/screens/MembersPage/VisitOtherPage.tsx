@@ -39,6 +39,7 @@ import CommunityApiService from "../../apiServices/communityApiService.ts";
 import { sweetErrorHandling, sweetTopSmallSuccessAlert } from "../../../lib/sweetAlert.ts";
 import FollowApiService from "../../apiServices/followApiService.ts";
 import { verifiedMemberData } from "../../apiServices/verify.ts";
+import { serverApi } from "../../../lib/config.ts";
 
 
 
@@ -121,7 +122,7 @@ const {chosen_mb_id, chosen_art_id} = props;
     }
    const  memberService = new MemberApiService();
    memberService
-    .getChosenMember(memberArticleSearchObj.mb_id)
+    .getChosenMember(memberArticleSearchObj?.mb_id)
     .then((data) => setChosenMember(data))
     .catch((err) => console.log(err));
   },[verifiedMemberData, chosen_mb_id, followRebuild]);
@@ -263,14 +264,16 @@ const handlePaginationChange = (event: any, value: number) => {
                          alignItems={"center"}
                          >
                           <div className="order_user_img">
-                         <img src={"/auth/cute_girl.jpg"}  
+                         <img src={chosenMember?.mb_image
+                         ? `${serverApi}/${chosenMember?.mb_image}`
+                         : "/auth/odamcha.svg" }  
                           className={"order_user_avatar"}
                           alt="rasm"
                           />
                           
                         </div>
                          <span className="order_user_name">{chosenMember?.mb_nick}</span>
-                         <span className="order_user_prof">{chosenMember?.mb_type}</span>
+                         <span className="order_user_prof">{verifiedMemberData?.mb_type}</span>
                         </Box>
                         <Box className="user_media_box">
                           <FacebookIcon />
@@ -283,10 +286,10 @@ const handlePaginationChange = (event: any, value: number) => {
                                          flexDirection: "row",
                                      }}
                                 >
-                                    <p className={"follows"}>Followers: {chosenMember?.mb_subscriber_cnt} 
-                                                              Following: {chosenMember?.mb_follow_cnt}</p>
+                                    <p className={"follows"}>Followers: {verifiedMemberData?.mb_subscriber_cnt} 
+                                                              Following: {verifiedMemberData?.mb_follow_cnt}</p>
                             </Box>
-                        <p className="user_desc">{chosenMember?.mb_description ?? "qo'shimcha malumot kiritilmagan"}</p>
+                        <p className="user_desc">{verifiedMemberData?.mb_description ?? "qo'shimcha malumot kiritilmagan"}</p>
                         <Box 
                          display={"flex"}
                          justifyContent={"flex-end"}

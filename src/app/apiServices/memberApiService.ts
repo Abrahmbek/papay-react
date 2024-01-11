@@ -2,7 +2,7 @@ import { serverApi } from "../../lib/config.ts";
 import axios from "axios";
 import assert from "assert";
 import {Definer} from "../../lib/Definer.ts";
-import { Member } from "../../types/user.ts";
+import { Member, MemberUpdateData } from "../../types/user.ts";
 import { MemberLiken } from "../../types/others.ts";
 
 
@@ -98,6 +98,37 @@ class MemberApiService {
                   throw err;
             }
       }
+
+      public async updateMemberData ( data: MemberUpdateData) {
+            try{
+                let formData = new FormData();
+                formData.append("mb_nick", data.mb_nick || "");
+                formData.append("mb_phone", data.mb_phone || "");
+                formData.append("mb_address", data.mb_address || "");
+                formData.append("mb_description", data.mb_description || "");
+                formData.append("mb_image", data.mb_image|| "");
+               
+                const result = await axios(`${this.path}/member/update`, {
+                  method: "POST",
+                  data: formData,
+                  withCredentials: true,
+                  headers: {
+                        "Content-Type": "multipart/form-data",
+                  },
+                });
+                  
+                  assert.ok(result?.data, Definer.general_err1);
+                  assert.ok(result?.data?.state !== 'fail', result?.data?.message);
+                  console.log("state:", result.data.state);
+          
+                  const member: Member = result.data.data;
+                  localStorage.setItem("member_data", JSON.stringify(member));
+                  return member;
+            }catch(err: any) {
+                  console.log(`updateMemberData, ERORR:::  ${err.message}`);
+                  throw err;
+            }
+            }
 }
 
 

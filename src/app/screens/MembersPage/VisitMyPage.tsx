@@ -38,6 +38,7 @@ import { sweetErrorHandling, sweetFailureProvider } from "../../../lib/sweetAler
 import CommunityApiService from "../../apiServices/communityApiService.ts";
 import MemberApiService from "../../apiServices/memberApiService.ts";
 import { verifiedMemberData } from "../../apiServices/verify.ts";
+import { serverApi } from "../../../lib/config.ts";
 
 
 
@@ -230,14 +231,16 @@ const renderChosenArticleHandler = async (art_id: string) => {
                          alignItems={"center"}
                          >
                           <div className="order_user_img">
-                         <img src={"/auth/cute_girl.jpg"}  
+                         <img src={chosenMember?.mb_image
+                         ? `${serverApi}/${chosenMember?.mb_image}`
+                         : "/auth/odamcha.svg" }
                           className={"order_user_avatar"}
                           alt="rasm"
                           />
                           
                         </div>
-                         <span className="order_user_name">{chosenMember?.mb_nick}</span>
-                         <span className="order_user_prof">{chosenMember?.mb_type}</span>
+                         <span className="order_user_name">{verifiedMemberData?.mb_nick}</span>
+                         <span className="order_user_prof">{verifiedMemberData?.mb_type}</span>
                         </Box>
                         <Box className="user_media_box">
                           <FacebookIcon />
@@ -251,11 +254,11 @@ const renderChosenArticleHandler = async (art_id: string) => {
                                      }}
                                 >
                                     <p className={"follows"}>
-                                      Followers: {chosenMember?.mb_subscriber_cnt}
-                                       Following: {chosenMember?.mb_follow_cnt}</p>
+                                      Followers: {verifiedMemberData?.mb_subscriber_cnt}
+                                       Following: {verifiedMemberData?.mb_follow_cnt}</p>
                             </Box>
                         <p className="user_desc">
-                          {chosenMember?.mb_description ??
+                          {verifiedMemberData?.mb_description ??
                          "qo'shimcha malumot kiritilmagan"}</p>
                         <Box 
                          display={"flex"}

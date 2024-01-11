@@ -149,7 +149,7 @@
   
   .my_page {
     width: auto;
-    height: auto;
+   min-height: 738px;
     display: flex;
     position: relative;
   }
@@ -283,6 +283,7 @@
     }
     
     .my_page_right .menu_box {
+     
       width: 372.58px;
       height: 50px;
       border-radius: 20px;
@@ -301,7 +302,8 @@
     .my_page_menu .MuiTabs-flexContainer {
       display: flex;
       flex-direction: column;
-     
+      margin-top: 40px;
+    
     }
     /* FOLLOWERS STYLES:  */
   

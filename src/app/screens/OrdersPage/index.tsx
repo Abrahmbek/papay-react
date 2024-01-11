@@ -106,7 +106,7 @@ export function OrdersPage(props: any) {
             >
               <div className={"order_user_img"}>
                 <img src={verifiedMemberData?.mb_image} alt="" />
-                <img src={"/icons/odamcha.svg"}  alt=""/>
+                
               </div>
               <span className={"order_user_name"}>{verifiedMemberData?.mb_nick}</span>
               <span className={"order_user_prof"}>{verifiedMemberData?.mb_nick ?? "Foydalanuvchi"}</span>
