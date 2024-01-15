@@ -39,6 +39,7 @@ export function TargetArticles(props: any) {
         <Stack >
           { props.targetBoArticles?.map((article: BoArticle) => {
             const art_image_url = article?.art_image ?`${serverApi}/${article.art_image}` : "/auth/default_user1.svg";
+            console.log("rasmkemadi:: ", art_image_url);
             return (
               <Link
                 className={"all_article_box"}

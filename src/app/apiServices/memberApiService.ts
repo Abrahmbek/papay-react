@@ -83,9 +83,9 @@ class MemberApiService {
       public async getChosenMember(id: string) {
             try{
                   const url = `/member/${id}`,
-            result = await   axios.post(this.path + url, {withCredentials: true,
+            result = await   axios.get(this.path + url, {withCredentials: true,
             } );
-            
+            console.log("result getchosenmember::", result);
             assert.ok(result?.data, Definer.general_err1);
             assert.ok(result?.data?.state !=='fail', result?.data?.message);
             

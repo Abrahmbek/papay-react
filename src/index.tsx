@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from "react-dom";
 import { createRoot } from 'react-dom/client';
 import {Provider} from "react-redux";
 import './index.tsx';
@@ -10,18 +11,23 @@ import { ThemeProvider } from '@mui/material/styles';
 import theme from './app/MaterialTheme/index.ts';
 import { store } from './app/store.ts';
 
-const container = document.getElementById("root")!;
-const root = createRoot(container);
+import {SocketContext, socket } from "./app/context/socket.js"
 
-root.render(
+// const container = document.getElementById("root")!;
+// const root = createRoot(container);
+
+ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <ThemeProvider theme={theme}>
       <CssBaseline />
-       <App/>
+       <SocketContext.Provider value={socket}>
+        <App/>
+      </SocketContext.Provider>
      </ThemeProvider>
      </Provider>
-  </React.StrictMode>
+  </React.StrictMode>,
+   document.getElementById("root")
 );
 
 

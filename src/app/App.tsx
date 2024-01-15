@@ -213,9 +213,7 @@ const onDeleteAll = () => {
         <Route path="/help">
           <HelpPage />
         </Route>
-        <Route path="/login">
-          <LoginPage />
-        </Route>
+       
         <Route path="/">
           <HomePage />
         </Route>

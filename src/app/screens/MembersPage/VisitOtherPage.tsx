@@ -94,7 +94,7 @@ const {chosen_mb_id, chosen_art_id} = props;
   const [ articlesRebuild, setArticlesRebuild] = useState<Date>(new Date());
   const [ followRebuild, setFollowRebuild] = useState<boolean>(false);
 
-
+console.log("chosenMB::: ", chosen_mb_id);
   useEffect(() => {
     if( chosen_mb_id === verifiedMemberData?._id) {
       history.push("/member-page");
@@ -273,7 +273,7 @@ const handlePaginationChange = (event: any, value: number) => {
                           
                         </div>
                          <span className="order_user_name">{chosenMember?.mb_nick}</span>
-                         <span className="order_user_prof">{verifiedMemberData?.mb_type}</span>
+                         <span className="order_user_prof">{chosenMember?.mb_type}</span>
                         </Box>
                         <Box className="user_media_box">
                           <FacebookIcon />
@@ -286,10 +286,10 @@ const handlePaginationChange = (event: any, value: number) => {
                                          flexDirection: "row",
                                      }}
                                 >
-                                    <p className={"follows"}>Followers: {verifiedMemberData?.mb_subscriber_cnt} 
-                                                              Following: {verifiedMemberData?.mb_follow_cnt}</p>
+                                    <p className={"follows"}>Followers: {chosenMember?.mb_subscriber_cnt} 
+                                                              Following: {chosenMember?.mb_follow_cnt}</p>
                             </Box>
-                        <p className="user_desc">{verifiedMemberData?.mb_description ?? "qo'shimcha malumot kiritilmagan"}</p>
+                        <p className="user_desc">{chosenMember?.mb_description ?? "qo'shimcha malumot kiritilmagan"}</p>
                         <Box 
                          display={"flex"}
                          justifyContent={"flex-end"}
