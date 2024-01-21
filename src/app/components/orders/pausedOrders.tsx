@@ -106,7 +106,7 @@ export default function PausedOrders(props: any) {
                   <span>Maxsulot narxi </span>
                   <span>$ {order.order_total_amount - order.order_delivery_cost}</span>
                   <img
-                    style={{ }}
+                    style={{ marginLeft: "35px" }}
                     src={"/icons/plus.svg"} alt=""
                 />
                 </div>

@@ -209,7 +209,7 @@ export function OneRestaurant(props: any) {
                       key={ele._id}
                      className={"restaurant_avatars"}
                      >
-                      <img src={image_path}/>
+                      <img src={image_path} alt=''/>
                        <span>{ele.mb_nick}</span>
                     </SwiperSlide>
                     );
@@ -305,6 +305,7 @@ export function OneRestaurant(props: any) {
                sx={{
                 backgroundImage: `url(${image_path})`,
                }}
+               onClick={() => chosenDishHandler(product._id)}
                >
                 <div className={"dish_sale"}>{size_volume} </div>
                  <Button 
@@ -432,7 +433,7 @@ export function OneRestaurant(props: any) {
               <Box display={"flex"} flexDirection={"row"} key={index}>
                 <div className={"about_rigth_img"}
                 >
-                  <img src={"/auth/cheifs.png"} 
+                  <img src={"/auth/cheifs.png"} alt=''
                 
                    />
                 </div>

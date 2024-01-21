@@ -35,7 +35,7 @@ export function  NavbarRestaurant(props: any) {
                             Oshhona
                         </NavLink>
                   </Box>
-                  {props.verifiedMemberData ? (
+                  {verifiedMemberData ? (
                      <Box className="hover_line" onClick={props.SetPath}>
                      <NavLink to="/orders" activeClassName="underline">
                           Buyrtma

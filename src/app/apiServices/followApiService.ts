@@ -54,7 +54,7 @@ class FollowApiService {
                               {mb_id: mb_id},
                               {withCredentials: true}
                               );
-                              
+                              console.log("subscribe:::", result);
                               assert.ok(result?.data, Definer.general_err1);
                               assert.ok(result?.data?.state !== 'fail', result?.data?.message);
                               console.log("state:", result.data.state);
@@ -65,13 +65,13 @@ class FollowApiService {
                               throw err;
                         }
                         }
-                        public async unsubscribe ( mb_id: string): Promise<boolean> {
+                        public async unsubscribe( mb_id: string): Promise<boolean> {
                               try{  
                                     const result = await axios.post(this.path +  "/follow/unsubscribe",
                                     {mb_id: mb_id},
                                     {withCredentials: true}
                                     );
-                                    
+                                    console.log("unsubscribe:::", result);
                                     assert.ok(result?.data, Definer.general_err1);
                                     assert.ok(result?.data?.state !== 'fail', result?.data?.message);
                                     console.log("state:", result.data.state);

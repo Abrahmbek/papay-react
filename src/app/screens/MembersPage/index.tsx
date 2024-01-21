@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container } from "@mui/material";
+//import { Container } from "@mui/material";
 import { Route, Switch, useRouteMatch, useLocation } from 'react-router-dom';
 import { VisitOtherPage } from './VisitOtherPage.tsx';
 import { VisitMyPage } from './VisitMyPage.tsx';
@@ -22,13 +22,13 @@ export function MembersPage(props: any) {
          <Switch>
             <Route path={`${member.path}/other`}>
               <VisitOtherPage 
-      
+            
               chosen_mb_id={chosen_mb_id} 
               chosen_art_id={chosen_art_id}
               />
              </Route>
             <Route path={`${member.path}`}>
-              <VisitMyPage  />
+              <VisitMyPage   />
             </Route>
            
          </Switch>

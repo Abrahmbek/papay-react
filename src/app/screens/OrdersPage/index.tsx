@@ -109,7 +109,7 @@ export function OrdersPage(props: any) {
                 
               </div>
               <span className={"order_user_name"}>{verifiedMemberData?.mb_nick}</span>
-              <span className={"order_user_prof"}>{verifiedMemberData?.mb_nick ?? "Foydalanuvchi"}</span>
+              <span className={"order_user_prof"}>{verifiedMemberData?.mb_type ?? "Foydalanuvchi"}</span>
             </Box>
             <Box className={"line"}></Box>
             <Box

@@ -45,10 +45,10 @@ import { serverApi } from "../../../lib/config.ts";
 
 
 /** REDUX Slice */
-const actionDispatch = (dispatch: Dispatch) => ({
-  setChosenMember: (data: Member) => dispatch( setChosenMember(data)),
-  setChosenMemberBoArticles: (data: BoArticle[]) => dispatch(  setChosenMemberBoArticles(data)),
-  setChosenSingleBoArticle: (data: BoArticle) => dispatch( setChosenSingleBoArticle(data)),
+const actionDispatch = (dispach: Dispatch) => ({
+  setChosenMember: (data: Member) => dispach( setChosenMember(data)),
+  setChosenMemberBoArticles: (data: BoArticle[]) => dispach(  setChosenMemberBoArticles(data)),
+  setChosenSingleBoArticle: (data: BoArticle) => dispach( setChosenSingleBoArticle(data)),
 
  
 });
@@ -79,7 +79,7 @@ export function VisitOtherPage(props: any) {
   /**INITIALIZATIONS */
 
   const history = useHistory();
-const {chosen_mb_id, chosen_art_id} = props;
+const { chosen_mb_id, chosen_art_id} = props;
   const {setChosenMember, 
     setChosenMemberBoArticles,
     setChosenSingleBoArticle,
@@ -94,7 +94,7 @@ const {chosen_mb_id, chosen_art_id} = props;
   const [ articlesRebuild, setArticlesRebuild] = useState<Date>(new Date());
   const [ followRebuild, setFollowRebuild] = useState<boolean>(false);
 
-console.log("chosenMB::: ", chosen_mb_id);
+
   useEffect(() => {
     if( chosen_mb_id === verifiedMemberData?._id) {
       history.push("/member-page");
@@ -128,7 +128,7 @@ console.log("chosenMB::: ", chosen_mb_id);
   },[verifiedMemberData, chosen_mb_id, followRebuild]);
           
   /**  HANDLERS */
-   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
+   const handleChange = (event: any, newValue: string) => {
      setValue(newValue);
             
 };   
@@ -147,10 +147,10 @@ const renderChosenArticleHandler = async (art_id: string) => {
   }
 }  
 
-const subscribeHandler =async (e: any) => {
+const subscribeHandler = async (e: any) => {
   try{
 
-   assert.ok(verifiedMemberData, Definer.auth_err1);
+    assert.ok(verifiedMemberData, Definer.auth_err1);
 
    const followService = new FollowApiService();
    await followService.subscribe(e.target.value);
@@ -164,7 +164,7 @@ const subscribeHandler =async (e: any) => {
  }
       
  
-const unsubscribeHandler =async (e: any) => {
+const unsubscribeHandler = async (e: any) => {
   try{
 
    assert.ok(verifiedMemberData, Definer.auth_err1);
@@ -184,6 +184,8 @@ const handlePaginationChange = (event: any, value: number) => {
   memberArticleSearchObj.page = value;
   setMemberArticlesSearchObj({...memberArticleSearchObj});     
 }; 
+
+console.log("chosenMember.me_followed[0]?.my_following:::", chosenMember);
    return ( 
        <div className="my_page">
           <Container maxWidth="lg" sx={{mt: "50px", mb: "50px"}}>
@@ -299,19 +301,19 @@ const handlePaginationChange = (event: any, value: number) => {
                          onChange={handleChange}
                          aria-label="lab API tabs example"
                          >
-                              {chosenMember?.me_followed && 
+                              { chosenMember?.me_followed && 
                               chosenMember.me_followed[0]?.my_following ? (
                          <Tab 
                           style={{ flexDirection: "column"}}
                           value={"4"}
-                          component={(e) =>(
+                          component={() =>(
                             <Button
                             value={chosenMember?._id}
                             variant={"contained"}
                            style={{backgroundColor: "#30945e"}}
                            onClick={unsubscribeHandler}
                           >
-                              BEKOR QILISH
+                              UNFOLLOW
                               </Button>
                            )}
                          />
@@ -319,14 +321,14 @@ const handlePaginationChange = (event: any, value: number) => {
                               <Tab 
                               style={{ flexDirection: "column"}}
                               value={"4"}
-                              component={(e) =>(
+                              component={() =>(
                                 <Button
                                 value={chosenMember?._id}
                                 variant={"contained"}
                                style={{backgroundColor: "#30945e"}}
                                onClick={subscribeHandler}
                               >
-                                  FOLLOW QILISH
+                                  FOLLOW 
                                   </Button>
                                )}
                              />

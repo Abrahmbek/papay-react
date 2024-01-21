@@ -63,7 +63,7 @@ export default function ProcessOrders(props: any) {
                       <img src={image_path} className={"orderDishImg"}  alt=""/>
                       <p className={"titleDish"}>{product.product_name}</p>
                       <Box className={"priceBox"}>
-                        <p>${item.item_price}</p>
+                        <p>$ {item.item_price}</p>
                         <img
                           style={{ margin: "0 10px" }}
                           src={"/icons/close.svg"} alt=""
@@ -73,7 +73,7 @@ export default function ProcessOrders(props: any) {
                           style={{ margin: "0 10px" }}
                           src={"/icons/pause.svg"} alt=""
                         />
-                        <p style={{ marginLeft: "15px" }}>${item.item_price * item.item_quantity}</p>
+                        <p style={{ marginLeft: "15px" }}>$ {item.item_price * item.item_quantity}</p>
                       </Box>
                     </Box>
                   );
@@ -83,9 +83,9 @@ export default function ProcessOrders(props: any) {
               <Box className={"total_price_box process"}>
               <div>
                   <span>Maxsulot narxi </span>
-                  <span>$ {order.order_total_amount - order.order_delivery_cost}</span>
+                  <span>$ {order.order_total_amount - order.order_delivery_cost}  </span>
                   <img
-                    style={{ }}
+                    style={{ marginLeft: "35px"}}
                     src={"/icons/plus.svg"} alt=""
                 />
                 </div>

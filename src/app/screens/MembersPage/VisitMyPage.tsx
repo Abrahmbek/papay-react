@@ -254,7 +254,7 @@ const renderChosenArticleHandler = async (art_id: string) => {
                                      }}
                                 >
                                     <p className={"follows"}>
-                                      Followers: {verifiedMemberData?.mb_subscriber_cnt}
+                                      Followers: {verifiedMemberData?.mb_subscriber_cnt} <br />
                                        Following: {verifiedMemberData?.mb_follow_cnt}</p>
                             </Box>
                         <p className="user_desc">
